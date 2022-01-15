@@ -18,6 +18,7 @@ import { RouteProps } from "react-router";
 import { auth, autoLogin } from "./store/actions/auth";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AuthActions, AuthState } from "./store/reducers/auth";
+import NodeList from "./containers/NoteList/NoteList";
 
 interface AppDispatchProps {
   autoLogin: () => Promise<void>;
@@ -52,17 +53,19 @@ class App extends Component<AppDispatchProps & AppStateProps, {}> {
         <Route path="login" element={<LoginForm />} />
         <Route path="register" element={<RegisterForm />} />
         <Route path="rename" element={<RenameForm />} />
+        <Route path="*" element={<NodeList />} />
+
         {/*<Route path="/quiz/:id" element={Quiz} />*/}
         {/*<Route path="/" exact element={QuizList} />*/}
         {/* <Redirect to="/" />*/}
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
-            </main>
-          }
-        />
+        {/*<Route*/}
+        {/*  path="*"*/}
+        {/*  element={*/}
+        {/*    <main style={{ padding: "1rem" }}>*/}
+        {/*      <p>There's nothing here!</p>*/}
+        {/*    </main>*/}
+        {/*  }*/}
+        {/*/>*/}
       </Routes>
     );
 

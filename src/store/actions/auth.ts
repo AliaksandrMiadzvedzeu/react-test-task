@@ -54,6 +54,7 @@ export function rename(
 ): ThunkAction<Promise<void>, AuthState, {}, AuthActions> {
   return async (dispatch) => {
     // const authData = {
+    //   email,
     //   name,
     //   surname
     // };

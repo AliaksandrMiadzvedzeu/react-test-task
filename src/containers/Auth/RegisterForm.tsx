@@ -8,15 +8,6 @@ import { Form } from "./Form";
 import { ThunkDispatch } from "redux-thunk";
 import { AuthActions, AuthState } from "../../store/reducers/auth";
 
-// interface IProps {
-//   register: (
-//     login: string,
-//     password: string,
-//     name: string,
-//     surname: string
-//   ) => Promise<void>;
-//}
-
 interface RegisterFormDispatchProps {
   register: (
     email: string,
