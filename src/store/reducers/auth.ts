@@ -11,11 +11,12 @@ const initialState: AuthState = {
   token: null,
   name: "",
   surname: "",
-  //picture: ""
 };
 
 export interface AuthSuccessAction extends Action {
   type: "AUTH_SUCCESS";
+  name: string;
+  surname: string;
   token: string;
 }
 
@@ -34,6 +35,8 @@ const reducer: Reducer<AuthState, AuthActions> = (
       return {
         ...state,
         token: action.token,
+        name: action.name,
+        surname: action.surname,
       };
     case AUTH_LOGOUT:
       return {

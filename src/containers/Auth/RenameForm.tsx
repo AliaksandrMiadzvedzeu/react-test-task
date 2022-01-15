@@ -1,20 +1,26 @@
-import React, { Component, Dispatch } from "react";
+import React from "react";
 import classes from "./Auth.module.css";
 import Button from "../../components/UI/Button/Button";
 import { connect } from "react-redux";
-import { auth } from "../../store/actions/auth";
-import {
-  IFormControl,
-  IFormControls,
-  IValidation,
-} from "../../interfaces/IFormControl";
+import { rename } from "../../store/actions/auth";
+import { IFormControls } from "../../interfaces/IFormControl";
 import { Form } from "./Form";
+import { ThunkDispatch } from "redux-thunk";
+import { AuthActions, AuthState } from "../../store/reducers/auth";
 
-interface IProps {
+interface RenameFormDispatchProps {
   rename: (name: string, surname: string) => Promise<void>;
 }
 
-class RenameForm extends Form<IProps, IFormControls> {
+function mapDispatchToProps(
+  dispatch: ThunkDispatch<AuthState, {}, AuthActions>
+) {
+  return {
+    rename: (name: string, surname: string) => dispatch(rename(name, surname)),
+  };
+}
+
+class RenameForm extends Form<RenameFormDispatchProps, IFormControls> {
   state = {
     isFormValid: false,
     formControls: {
@@ -74,13 +80,4 @@ class RenameForm extends Form<IProps, IFormControls> {
   }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<any>) {
-  return {
-    rename: (name: string, surname: string) =>
-      dispatch(auth(name, surname, true)),
-  };
-}
-
-type DispatchProps = typeof mapDispatchToProps;
-
-export default connect<{}, DispatchProps>(null, mapDispatchToProps)(RenameForm);
+export default connect(null, mapDispatchToProps)(RenameForm);

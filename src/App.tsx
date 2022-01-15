@@ -10,26 +10,40 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import Logout from './components/Logout/Logout'
 //import {autoLogin} from './store/actions/auth';
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { Dispatch, Reducer } from "redux";
 import LoginForm from "./containers/Auth/LoginForm";
 import RegisterForm from "./containers/Auth/RegisterForm";
 import RenameForm from "./containers/Auth/RenameForm";
 import { RouteProps } from "react-router";
-import { auth } from "./store/actions/auth";
+import { auth, autoLogin } from "./store/actions/auth";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { AuthActions, AuthState } from "./store/reducers/auth";
 
-//interface IProps extends RouteProps {
-interface IProps {
-  //autoLogin: () => void;
-  //isAuthenticated: boolean;
+interface AppDispatchProps {
+  autoLogin: () => Promise<void>;
 }
 
-interface IState {
-  //playOrPause?: string;
+interface AppStateProps {
+  isAuthenticated: boolean;
 }
 
-class App extends Component<IProps, IState> {
+function mapStateToProps(state: AuthState) {
+  return {
+    isAuthenticated: !!state.token,
+  };
+}
+
+function mapDispatchToProps(
+  dispatch: ThunkDispatch<AuthState, {}, AuthActions>
+) {
+  return {
+    autoLogin: () => dispatch(autoLogin()),
+  };
+}
+
+class App extends Component<AppDispatchProps & AppStateProps, {}> {
   componentDidMount() {
-    //this.props.autoLogin()
+    return this.props.autoLogin();
   }
 
   render() {
@@ -37,7 +51,7 @@ class App extends Component<IProps, IState> {
       <Routes>
         <Route path="login" element={<LoginForm />} />
         <Route path="register" element={<RegisterForm />} />
-        {/*<Route path="rename" element={<RenameForm />} />*/}
+        <Route path="rename" element={<RenameForm />} />
         {/*<Route path="/quiz/:id" element={Quiz} />*/}
         {/*<Route path="/" exact element={QuizList} />*/}
         {/* <Redirect to="/" />*/}
@@ -66,19 +80,6 @@ class App extends Component<IProps, IState> {
 
     return <Layout>{routes}</Layout>;
   }
-}
-
-function mapStateToProps(state: IState) {
-  return {
-    //isAuthenticated: !!state.auth.token
-  };
-}
-
-function mapDispatchToProps(dispatch: Dispatch) {
-  console.log("BBBB ", dispatch);
-  return {
-    //autoLogin: () => dispatch(autoLogin())
-  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

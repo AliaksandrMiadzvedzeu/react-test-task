@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AUTH_LOGOUT, AUTH_SUCCESS } from "./actionTypes";
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import {
   AuthActions,
   AuthLogoutAction,
@@ -10,8 +10,7 @@ import {
 
 export function auth(
   email: string,
-  password: string,
-  isLogin: boolean
+  password: string
 ): ThunkAction<Promise<void>, AuthState, {}, AuthActions> {
   return async (dispatch) => {
     const authData = {
@@ -21,27 +20,67 @@ export function auth(
     };
 
     let url =
+      "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDu1Vl1g7dYcb2QqAEDCzTiFegSR8xrS04";
+
+    await sendData(url, authData, dispatch);
+  };
+}
+
+export function register(
+  email: string,
+  password: string,
+  name: string,
+  surname: string
+): ThunkAction<Promise<void>, AuthState, {}, AuthActions> {
+  return async (dispatch) => {
+    const authData = {
+      email,
+      password,
+      name,
+      surname,
+      returnSecureToken: true,
+    };
+
+    let url =
       "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDu1Vl1g7dYcb2QqAEDCzTiFegSR8xrS04";
 
-    if (isLogin) {
-      url =
-        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDu1Vl1g7dYcb2QqAEDCzTiFegSR8xrS04";
-    }
-
-    const response = await axios.post(url, authData);
-    const data = response.data;
-
-    const expirationDate = new Date(
-      new Date().getTime() + data.expiresIn * 1000
-    );
-
-    localStorage.setItem("token", data.idToken);
-    localStorage.setItem("userId", data.localId);
-    localStorage.setItem("expirationDate", expirationDate.toString());
-
-    dispatch(authSuccess(data.idToken));
-    await dispatch(autoLogout(data.expiresIn));
+    await sendData(url, authData, dispatch);
   };
+}
+
+export function rename(
+  name: string,
+  surname: string
+): ThunkAction<Promise<void>, AuthState, {}, AuthActions> {
+  return async (dispatch) => {
+    // const authData = {
+    //   name,
+    //   surname
+    // };
+    //
+    // let url =
+    //     "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDu1Vl1g7dYcb2QqAEDCzTiFegSR8xrS04";
+    //
+    // await sendData(url, authData, dispatch);
+  };
+}
+
+async function sendData(
+  url: string,
+  authData: any,
+  dispatch: ThunkDispatch<AuthState, {}, AuthActions>
+) {
+  const response = await axios.post(url, authData);
+  const data = response.data;
+
+  const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000);
+
+  localStorage.setItem("token", data.idToken);
+  localStorage.setItem("userId", data.localId);
+  localStorage.setItem("expirationDate", expirationDate.toString());
+
+  dispatch(authSuccess(data.idToken, "Aliaksandr", "Miad"));
+  await dispatch(autoLogout(data.expiresIn));
 }
 
 export function autoLogout(
@@ -80,7 +119,7 @@ export function autoLogin(): ThunkAction<
       if (expirationDate <= new Date()) {
         dispatch(logout());
       } else {
-        dispatch(authSuccess(token));
+        dispatch(authSuccess(token, "Aliaksandr", "Miad"));
         await dispatch(
           autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000)
         );
@@ -89,9 +128,15 @@ export function autoLogin(): ThunkAction<
   };
 }
 
-export function authSuccess(token: string): AuthSuccessAction {
+export function authSuccess(
+  token: string,
+  name: string,
+  surname: string
+): AuthSuccessAction {
   return {
     type: AUTH_SUCCESS,
+    name,
+    surname,
     token,
   };
 }

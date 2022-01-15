@@ -9,15 +9,14 @@ import { ThunkDispatch } from "redux-thunk";
 import { AuthActions, AuthState } from "../../store/reducers/auth";
 
 interface LoginFormDispatchProps {
-  login: (login: string, password: string, isLogin: boolean) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
 }
 
 function mapDispatchToProps(
   dispatch: ThunkDispatch<AuthState, {}, AuthActions>
 ) {
   return {
-    login: (login: string, password: string, isLogin: boolean) =>
-      dispatch(auth(login, password, true)),
+    login: (email: string, password: string) => dispatch(auth(email, password)),
   };
 }
 
@@ -55,8 +54,7 @@ class LoginForm extends Form<LoginFormDispatchProps, IFormControls> {
   loginHandler = () =>
     this.props.login(
       this.state.formControls.email.value,
-      this.state.formControls.password.value,
-      true
+      this.state.formControls.password.value
     );
 
   render() {
