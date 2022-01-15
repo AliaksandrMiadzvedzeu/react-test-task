@@ -5,17 +5,32 @@ import { connect } from "react-redux";
 import { auth } from "../../store/actions/auth";
 import { IFormControls } from "../../interfaces/IFormControl";
 import { Form } from "./Form";
+import { ThunkDispatch } from "redux-thunk";
+import { AuthActions, AuthState } from "../../store/reducers/auth";
 
-interface IProps {
-  register: (
-    login: string,
-    password: string,
-    name: string,
-    surname: string
-  ) => Promise<void>;
+// interface IProps {
+//   register: (
+//     login: string,
+//     password: string,
+//     name: string,
+//     surname: string
+//   ) => Promise<void>;
+//}
+
+interface RegisterFormDispatchProps {
+  register: (login: string, password: string) => Promise<void>;
 }
 
-class RegisterForm extends Form<IProps, IFormControls> {
+function mapDispatchToProps(
+  dispatch: ThunkDispatch<AuthState, {}, AuthActions>
+) {
+  return {
+    register: (login: string, password: string) =>
+      dispatch(auth(login, password, false)),
+  };
+}
+
+class RegisterForm extends Form<RegisterFormDispatchProps, IFormControls> {
   state = {
     isFormValid: false,
     formControls: {
@@ -73,9 +88,9 @@ class RegisterForm extends Form<IProps, IFormControls> {
   registerHandler = () =>
     this.props.register(
       this.state.formControls.email.value,
-      this.state.formControls.password.value,
-      this.state.formControls.name.value,
-      this.state.formControls.surname.value
+      this.state.formControls.password.value
+      //this.state.formControls.name.value,
+      //this.state.formControls.surname.value
     );
 
   render() {
@@ -100,16 +115,4 @@ class RegisterForm extends Form<IProps, IFormControls> {
   }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<any>) {
-  return {
-    register: (email: string, password: string, isLogin: boolean) =>
-      dispatch(auth(email, password, false)),
-  };
-}
-
-type DispatchProps = typeof mapDispatchToProps;
-
-export default connect<{}, DispatchProps>(
-  null,
-  mapDispatchToProps
-)(RegisterForm);
+export default connect(null, mapDispatchToProps)(RegisterForm);
