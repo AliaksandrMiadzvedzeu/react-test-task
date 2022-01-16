@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactChild, ReactChildren } from "react";
 import classes from "./Button.module.css";
 
 interface IButtonProps {
   type: string;
   disabled: boolean;
-  children: React.ReactNode;
+  children: ReactChild | ReactChildren;
   onClick: () => void;
 }
 

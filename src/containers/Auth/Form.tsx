@@ -39,30 +39,28 @@ export class Form<T, P extends IFormControls> extends Component<T, P> {
     event: React.ChangeEvent<HTMLInputElement>,
     controlName: string
   ) => {
-    if (this.state && this.state.formControls) {
-      const formControls: { [key: string]: IFormControl } = {
-        ...this.state.formControls,
-      };
+    const formControls: { [key: string]: IFormControl } = {
+      ...this.state.formControls,
+    };
 
-      const control: IFormControl = { ...formControls[controlName] };
+    const control: IFormControl = { ...formControls[controlName] };
 
-      control.value = event.target.value;
-      control.touched = true;
-      control.valid = this.validateControl(control.value, control.validation);
+    control.value = event.target.value;
+    control.touched = true;
+    control.valid = this.validateControl(control.value, control.validation);
 
-      formControls[controlName] = control;
+    formControls[controlName] = control;
 
-      let isFormValid = true;
+    let isFormValid = true;
 
-      Object.keys(formControls).forEach((name) => {
-        isFormValid = formControls[name].valid && isFormValid;
-      });
+    Object.keys(formControls).forEach((name) => {
+      isFormValid = formControls[name].valid && isFormValid;
+    });
 
-      this.setState({
-        formControls,
-        isFormValid,
-      });
-    }
+    this.setState({
+      formControls,
+      isFormValid,
+    });
   };
 
   renderInputs() {

@@ -25,7 +25,6 @@ class Drawer extends Component<IDrawerProps> {
         <li key={index}>
           <NavLink
             to={link.to}
-            end={true}
             onClick={this.clickHandler}
             className={({ isActive }) => (isActive ? classes.active : "")}
           >
@@ -43,10 +42,10 @@ class Drawer extends Component<IDrawerProps> {
       cls.push(classes.close);
     }
 
-    const links = [{ to: "/", label: "Список" }];
+    const links = [];
 
     if (this.props.isAuthenticated) {
-      //links.push({ to: "/quiz-creator", label: "Создать тест" });
+      links.push({ to: "/list", label: "Список" });
       links.push({ to: "/logout", label: "Выйти" });
     } else {
       links.push({ to: "/login", label: "Авторизация" });
