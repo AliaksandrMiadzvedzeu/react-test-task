@@ -9,21 +9,19 @@ import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
-// const composeEnhancers =
-//     typeof window === 'object' &&
-//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-//         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-//         }) : compose;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
-//const store = createStore(
-//rootReducer ,
-// composeEnhancers(
-//     applyMiddleware(thunk)
-// )
-//);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const configureStore = () => {
-  const store = createStore(rootReducer, applyMiddleware(thunk));
+  const store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(thunk))
+  );
   return store;
 };
 
