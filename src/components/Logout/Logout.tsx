@@ -21,7 +21,7 @@ class Logout extends Component<LogoutDispatchProps> {
   }
 
   render() {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/list" replace />;
   }
 }
 

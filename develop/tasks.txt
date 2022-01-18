@@ -5,3 +5,6 @@
 5) https://react-redux.js.org/using-react-redux/usage-with-typescript ConnectedProps in https://redux.js.org/usage/usage-with-typescript
 6) https://codesandbox.io/s/thunkdispatch-fmpq4?file=/src/Component.tsx:492-504
 7) https://stackblitz.com/edit/dexie-todo-list-6sz2tk?file=components%2FAddTodoList.tsx
+
+8) https://github.com/Hexlet/ru-test-assignments - Список тестовых заданий для прокачки
+9) прверыць па коду што дубюлираваны емэйл пры рэгистрацыи

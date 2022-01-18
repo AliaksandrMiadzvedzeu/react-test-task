@@ -48,6 +48,7 @@ class Drawer extends Component<IDrawerProps> {
       links.push({ to: "/list", label: "Список" });
       links.push({ to: "/logout", label: "Выйти" });
     } else {
+      links.push({ to: "/list", label: "Список" });
       links.push({ to: "/login", label: "Авторизация" });
       links.push({ to: "/register", label: "Регистрация" });
     }

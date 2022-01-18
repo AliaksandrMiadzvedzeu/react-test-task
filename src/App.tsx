@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import { connect } from "react-redux";
 import LoginForm from "./containers/Auth/LoginForm";
 import RegisterForm from "./containers/Auth/RegisterForm";
-import RenameForm from "./containers/Auth/RenameForm";
 import { autoLogin } from "./store/actions/auth";
 import { ThunkDispatch } from "redux-thunk";
 import { AuthActions, AuthState } from "./store/reducers/auth";
@@ -43,18 +42,18 @@ class App extends Component<AppDispatchProps & AppStateProps, {}> {
   render() {
     let routes = (
       <Routes>
+        <Route path="list" element={<NodeList />} />
         <Route path="register" element={<RegisterForm />} />
-        <Route path="rename" element={<RenameForm />} />
         <Route path="login" element={<LoginForm />} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/list" />} />
       </Routes>
     );
 
     if (this.props.isAuthenticated) {
       routes = (
         <Routes>
-          <Route path="logout" element={<Logout />} />
           <Route path="list" element={<NodeList />} />
+          <Route path="logout" element={<Logout />} />
           <Route path="*" element={<Navigate to="/list" />} />
         </Routes>
       );

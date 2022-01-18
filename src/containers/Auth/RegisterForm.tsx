@@ -1,15 +1,15 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import classes from "./Auth.module.css";
 import Button from "../../components/UI/Button/Button";
 import { connect } from "react-redux";
-import { register } from "../../store/actions/auth";
+import { auth } from "../../store/actions/auth";
 import { IFormControls } from "../../interfaces/IFormControl";
 import { Form } from "./Form";
 import { ThunkDispatch } from "redux-thunk";
 import { AuthActions, AuthState } from "../../store/reducers/auth";
 
 interface RegisterFormDispatchProps {
-  register: (
+  auth: (
     email: string,
     password: string,
     name: string,
@@ -21,12 +21,8 @@ function mapDispatchToProps(
   dispatch: ThunkDispatch<AuthState, {}, AuthActions>
 ) {
   return {
-    register: (
-      email: string,
-      password: string,
-      name: string,
-      surname: string
-    ) => dispatch(register(email, password, name, surname)),
+    auth: (email: string, password: string, name: string, surname: string) =>
+      dispatch(auth(email, password, name, surname)),
   };
 }
 
@@ -86,7 +82,7 @@ class RegisterForm extends Form<RegisterFormDispatchProps, IFormControls> {
   };
 
   registerHandler = () =>
-    this.props.register(
+    this.props.auth(
       this.state.formControls.email.value,
       this.state.formControls.password.value,
       this.state.formControls.name.value,
