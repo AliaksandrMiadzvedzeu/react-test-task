@@ -3,18 +3,21 @@ import { Action, Reducer } from "redux";
 
 export interface AuthState {
   token: string | null;
+  email: string;
   name: string;
   surname: string;
 }
 
 const initialState: AuthState = {
   token: null,
+  email: "",
   name: "",
   surname: "",
 };
 
 export interface AuthSuccessAction extends Action {
   type: "AUTH_SUCCESS";
+  email: string;
   name: string;
   surname: string;
   token: string;
@@ -35,6 +38,7 @@ const reducer: Reducer<AuthState, AuthActions> = (
       return {
         ...state,
         token: action.token,
+        email: action.email,
         name: action.name,
         surname: action.surname,
       };

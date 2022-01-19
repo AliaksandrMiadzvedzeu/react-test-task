@@ -24,3 +24,13 @@
     padding: 15px;
     border-radius: 5px;
 }
+
+.Error {
+    color: #f01f30;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+

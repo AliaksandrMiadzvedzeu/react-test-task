@@ -58,6 +58,7 @@ export class Form<T, P extends IFormControls> extends Component<T, P> {
     });
 
     this.setState({
+      ...this.state,
       formControls,
       isFormValid,
     });

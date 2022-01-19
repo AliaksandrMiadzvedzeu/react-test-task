@@ -7,7 +7,7 @@ import RegisterForm from "./containers/Auth/RegisterForm";
 import { autoLogin } from "./store/actions/auth";
 import { ThunkDispatch } from "redux-thunk";
 import { AuthActions, AuthState } from "./store/reducers/auth";
-import NodeList from "./containers/NoteList/NoteList";
+import NoteList from "./containers/NoteList/NoteList";
 import Logout from "./components/Logout/Logout";
 import { IState } from "./store/reducers/rootReducer";
 import { Navigate } from "react-router-dom";
@@ -42,7 +42,6 @@ class App extends Component<AppDispatchProps & AppStateProps, {}> {
   render() {
     let routes = (
       <Routes>
-        <Route path="list" element={<NodeList />} />
         <Route path="register" element={<RegisterForm />} />
         <Route path="login" element={<LoginForm />} />
         <Route path="*" element={<Navigate to="/list" />} />
@@ -52,7 +51,7 @@ class App extends Component<AppDispatchProps & AppStateProps, {}> {
     if (this.props.isAuthenticated) {
       routes = (
         <Routes>
-          <Route path="list" element={<NodeList />} />
+          <Route path="list" element={<NoteList textColor="blue" />} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<Navigate to="/list" />} />
         </Routes>

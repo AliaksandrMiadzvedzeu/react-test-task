@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
-//import quizReducer from './quiz'
-//import createReducer from './create'
 import authReducer, { AuthState } from "./auth";
+import noteReducer, { INoteState } from "./note";
 
 export interface IState {
+  note: INoteState;
   auth: AuthState;
 }
 
 export default combineReducers({
-  //quiz: quizReducer,
+  note: noteReducer,
   //create: createReducer,
   auth: authReducer,
 });

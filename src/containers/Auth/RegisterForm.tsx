@@ -29,6 +29,7 @@ function mapDispatchToProps(
 class RegisterForm extends Form<RegisterFormDispatchProps, IFormControls> {
   state = {
     isFormValid: false,
+    serverErrorMessage: "",
     formControls: {
       email: {
         value: "",
@@ -82,12 +83,23 @@ class RegisterForm extends Form<RegisterFormDispatchProps, IFormControls> {
   };
 
   registerHandler = () =>
-    this.props.auth(
-      this.state.formControls.email.value,
-      this.state.formControls.password.value,
-      this.state.formControls.name.value,
-      this.state.formControls.surname.value
-    );
+    this.props
+      .auth(
+        this.state.formControls.email.value,
+        this.state.formControls.password.value,
+        this.state.formControls.name.value,
+        this.state.formControls.surname.value
+      )
+      .catch((error) => {
+        if (error?.message) {
+          this.setState({
+            ...this.state,
+            serverErrorMessage: error.message,
+          });
+        } else {
+          console.error("An unexpected error happened:", error);
+        }
+      });
 
   render() {
     return (
@@ -104,6 +116,11 @@ class RegisterForm extends Form<RegisterFormDispatchProps, IFormControls> {
             >
               Зарегистрироваться
             </Button>
+            {this.state.serverErrorMessage.trim().length > 0 ? (
+              <div className={classes.Error}>
+                {this.state.serverErrorMessage}
+              </div>
+            ) : null}
           </form>
         </div>
       </div>

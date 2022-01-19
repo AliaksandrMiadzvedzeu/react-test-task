@@ -23,6 +23,7 @@ function mapDispatchToProps(
 class LoginForm extends Form<LoginFormDispatchProps, IFormControls> {
   state = {
     isFormValid: false,
+    serverErrorMessage: "",
     formControls: {
       email: {
         value: "",
@@ -52,10 +53,21 @@ class LoginForm extends Form<LoginFormDispatchProps, IFormControls> {
   };
 
   loginHandler = () =>
-    this.props.auth(
-      this.state.formControls.email.value,
-      this.state.formControls.password.value
-    );
+    this.props
+      .auth(
+        this.state.formControls.email.value,
+        this.state.formControls.password.value
+      )
+      .catch((error) => {
+        if (error?.message) {
+          this.setState({
+            ...this.state,
+            serverErrorMessage: error.message,
+          });
+        } else {
+          console.error("An unexpected error happened:", error);
+        }
+      });
 
   render() {
     return (
@@ -73,6 +85,11 @@ class LoginForm extends Form<LoginFormDispatchProps, IFormControls> {
             >
               Войти
             </Button>
+            {this.state.serverErrorMessage.trim().length > 0 ? (
+              <div className={classes.Error}>
+                {this.state.serverErrorMessage}
+              </div>
+            ) : null}
           </form>
         </div>
       </div>
