@@ -21,9 +21,9 @@ import {
 } from "./actionTypes";
 
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { INote } from "../../interfaces/INote";
 import { AnyAction } from "redux";
 import { ApplicationState } from "../index";
+import { INote } from "./reducers";
 
 export function fetchNotes(): ThunkAction<
   Promise<void>,

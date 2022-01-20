@@ -3,7 +3,7 @@ import classes from "./Auth.module.css";
 import Button from "../../components/UI/Button/Button";
 import { connect } from "react-redux";
 import { auth } from "../../store/auth/actions";
-import { IFormControls } from "../../interfaces/IFormControl";
+import { IFormControls } from "./IFormControl";
 import { Form } from "./Form";
 import { ThunkDispatch } from "redux-thunk";
 import { AuthAction } from "../../store/auth/actionTypes";

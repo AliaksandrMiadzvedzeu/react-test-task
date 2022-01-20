@@ -1,8 +1,4 @@
-import {
-  IFormControl,
-  IFormControls,
-  IValidation,
-} from "../../interfaces/IFormControl";
+import { IFormControl, IFormControls, IValidation } from "./IFormControl";
 
 import is from "is_js";
 import React, { Component } from "react";

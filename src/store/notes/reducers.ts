@@ -9,12 +9,17 @@ import {
   SET_FILTER,
   ADD_NOTE,
 } from "./actionTypes";
-import { INote } from "../../interfaces/INote";
 import { Reducer } from "redux";
 import { NoteAction } from "./actions";
 
 export interface State {
   reducer: NoteState;
+}
+
+export interface INote {
+  id: string;
+  text: string;
+  done: boolean;
 }
 
 export interface NoteState {
@@ -95,7 +100,3 @@ export const reducer: Reducer<NoteState, NoteAction> = (
 };
 
 export default reducer;
-
-// export default combineReducers<State>({
-//   reducer,
-// });

@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { INote } from "../../interfaces/INote";
+import { INote } from "./reducers";
 
 export const FETCH_NOTES_START = "FETCH_NOTES_START";
 export const FETCH_NOTES_SUCCESS = "FETCH_NOTES_SUCCESS";

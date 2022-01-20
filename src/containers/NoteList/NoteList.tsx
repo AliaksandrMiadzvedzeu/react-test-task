@@ -10,11 +10,10 @@ import {
   saveNotes,
   setFilter,
 } from "../../store/notes/actions";
-import { INote } from "../../interfaces/INote";
 import { connect } from "react-redux";
 import Loader from "../../components/UI/Loader/Loader";
 import { ApplicationState } from "../../store";
-import { NoteState } from "../../store/notes/reducers";
+import { INote } from "../../store/notes/reducers";
 
 interface State {
   fontSize: number;

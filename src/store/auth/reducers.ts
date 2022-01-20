@@ -1,11 +1,5 @@
-import {
-  AUTH_LOGOUT,
-  AUTH_SUCCESS,
-  AuthAction,
-  AuthLogoutAction,
-  AuthSuccessAction,
-} from "./actionTypes";
-import { combineReducers, Reducer } from "redux";
+import { AUTH_LOGOUT, AUTH_SUCCESS, AuthAction } from "./actionTypes";
+import { Reducer } from "redux";
 
 export interface State {
   reducer: AuthState;

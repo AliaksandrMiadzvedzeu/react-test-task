@@ -14,9 +14,6 @@ export interface IFormControl {
   valid: boolean;
   touched: boolean;
   validation: IValidation;
-  //styles: {
-  //[key: string]: string;
-  // };
 }
 
 export interface IValidation {
