@@ -22,19 +22,24 @@ import {
 
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { INote } from "../../interfaces/INote";
-//import { IAction } from "../../interfaces/IAction";
-import { NoteState } from "./reducers";
 import { AnyAction } from "redux";
 import { ApplicationState } from "../index";
 
-export function fetchNotes(
-  userId: string
-): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
-  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+export function fetchNotes(): ThunkAction<
+  Promise<void>,
+  ApplicationState,
+  {},
+  AnyAction
+> {
+  return async (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+    getState
+  ): Promise<void> => {
+    const { email } = getState().auth;
     dispatch(fetchNotesStart());
     try {
       const response = await axios_user.get(
-        `/users/${userId.replace(".", "^")}/data.json`
+        `/users/${email.replace(".", "^")}/data.json`
       );
 
       const notes: Array<INote> = [];
@@ -52,16 +57,30 @@ export function fetchNotes(
   };
 }
 
-export function saveNotes(
-  userId: string,
-  updatedNotes: Array<INote>
-): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
-  return async (dispatch: ThunkDispatch<{}, {}, NoteAction>): Promise<void> => {
+export function saveNotes(): ThunkAction<
+  Promise<void>,
+  ApplicationState,
+  {},
+  AnyAction
+> {
+  return async (
+    dispatch: ThunkDispatch<{}, {}, NoteAction>,
+    getState
+  ): Promise<void> => {
+    const { email } = getState().auth;
+    const { updatedNotes } = getState().note;
+
     dispatch(saveNotesStart("Saving data..."));
     try {
-      await axios_user.put(`/users/${userId.replace(".", "^")}.json/data/`, {
-        updatedNotes,
-      });
+      const data: any = {};
+      for (const item of updatedNotes) {
+        data[item.id] = { text: item.text, done: item.done };
+      }
+      console.log("AAAAAAAAAAAAAAA ", data);
+      await axios_user.put(
+        `/users/${email.replace(".", "^")}/data.json/`,
+        data
+      );
 
       dispatch(saveNotesSuccess(updatedNotes));
     } catch (e) {
@@ -91,16 +110,12 @@ export function changeNote(
 }
 
 export function addNote(
-  text: string
+  note: INote
 ): ThunkAction<void, ApplicationState, {}, AnyAction> {
   return (dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>): void => {
-    //const state = getState();
-    //const { updatedNotes } = getState().note;
-    //let copyArr = [...updatedNotes];
-    //copyArr.push({ id: "x1", text, done: false });
     dispatch({
       type: ADD_NOTE,
-      note: { id: "x1", text, done: false },
+      note,
     });
   };
 }

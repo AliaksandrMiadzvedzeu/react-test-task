@@ -66,7 +66,7 @@ export const reducer: Reducer<NoteState, NoteAction> = (
     case SAVE_NOTES_SUCCESS:
       return {
         ...state,
-        notes: action.updatedNotes || [],
+        notes: [...action.updatedNotes],
         message: "",
       };
     case SAVE_NOTES_ERROR:

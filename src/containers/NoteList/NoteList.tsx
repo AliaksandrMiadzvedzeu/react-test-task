@@ -20,14 +20,14 @@ interface State {
 }
 
 interface OwnProps {
-  userId: string;
+  textColor: string;
 }
 
 interface DispatchProps {
-  fetchNotes: (userId: string) => void;
-  saveNotes: (userId: string, updatedNotes: Array<INote>) => void;
+  fetchNotes: () => void;
+  saveNotes: () => void;
   changeNote: (note: INote) => void;
-  addNote: (text: string) => void;
+  addNote: (note: INote) => void;
 }
 
 interface StateProps {
@@ -54,11 +54,10 @@ function mapDispatchToProps(
   dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
 ): DispatchProps {
   return {
-    fetchNotes: (userId: string) => dispatch(fetchNotes(userId)),
-    saveNotes: (userId: string, updatedNotes: Array<INote>) =>
-      dispatch(saveNotes(userId, updatedNotes)),
+    fetchNotes: () => dispatch(fetchNotes()),
+    saveNotes: () => dispatch(saveNotes()),
     changeNote: (note: INote) => dispatch(changeNote(note)),
-    addNote: (text: string) => dispatch(addNote(text)),
+    addNote: (note: INote) => dispatch(addNote(note)),
   };
 }
 
@@ -71,7 +70,7 @@ class NoteList extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.fetchNotes(this.props.userId);
+    this.props.fetchNotes();
   }
 
   renderNotes() {
@@ -98,7 +97,19 @@ class NoteList extends Component<Props, State> {
             type="button"
             value="Add note"
             onClick={(e) => {
-              this.props.addNote("AAAAAAAAAA");
+              const note: INote = {
+                id: "id" + this.props.updatedNotes.length,
+                text: "House",
+                done: false,
+              };
+              this.props.addNote(note);
+            }}
+          />
+          <input
+            type="button"
+            value="Save"
+            onClick={(e) => {
+              this.props.saveNotes();
             }}
           />
         </div>

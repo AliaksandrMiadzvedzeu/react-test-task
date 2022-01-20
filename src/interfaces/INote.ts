@@ -1,5 +1,5 @@
 export interface INote {
-  id?: string;
+  id: string;
   text: string;
   done: boolean;
 }
