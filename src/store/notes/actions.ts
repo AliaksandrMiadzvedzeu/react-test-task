@@ -76,7 +76,6 @@ export function saveNotes(): ThunkAction<
       for (const item of updatedNotes) {
         data[item.id] = { text: item.text, done: item.done };
       }
-      console.log("AAAAAAAAAAAAAAA ", data);
       await axios_user.put(
         `/users/${email.replace(".", "^")}/data.json/`,
         data
