@@ -1,5 +1,15 @@
-import { AUTH_LOGOUT, AUTH_SUCCESS } from "../actions/actionTypes";
-import { Action, Reducer } from "redux";
+import {
+  AUTH_LOGOUT,
+  AUTH_SUCCESS,
+  AuthAction,
+  AuthLogoutAction,
+  AuthSuccessAction,
+} from "./actionTypes";
+import { combineReducers, Reducer } from "redux";
+
+export interface State {
+  reducer: AuthState;
+}
 
 export interface AuthState {
   token: string | null;
@@ -15,21 +25,7 @@ const initialState: AuthState = {
   surname: "",
 };
 
-export interface AuthSuccessAction extends Action {
-  type: "AUTH_SUCCESS";
-  email: string;
-  name: string;
-  surname: string;
-  token: string;
-}
-
-export interface AuthLogoutAction extends Action {
-  type: "AUTH_LOGOUT";
-}
-
-export type AuthActions = AuthSuccessAction | AuthLogoutAction;
-
-const reducer: Reducer<AuthState, AuthActions> = (
+const reducer: Reducer<AuthState, AuthAction> = (
   state = initialState,
   action
 ): AuthState => {
@@ -53,3 +49,7 @@ const reducer: Reducer<AuthState, AuthActions> = (
 };
 
 export default reducer;
+
+// export default combineReducers<State>({
+//   reducer,
+// });

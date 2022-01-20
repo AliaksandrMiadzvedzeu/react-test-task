@@ -4,10 +4,11 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createStore, compose, applyMiddleware } from "redux";
-import rootReducer from "./store/reducers/rootReducer";
+import {ApplicationState, reducers} from "./store";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+
 
 declare global {
   interface Window {
@@ -19,7 +20,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const configureStore = () => {
   const store = createStore(
-    rootReducer,
+    reducers,
     composeEnhancers(applyMiddleware(thunk))
   );
   return store;

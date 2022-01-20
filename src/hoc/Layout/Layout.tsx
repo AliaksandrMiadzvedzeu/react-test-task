@@ -3,7 +3,7 @@ import classes from "./Layout.module.css";
 import MenuToggle from "../../components/Navigation/MenuToggle/MenuToggle";
 import Drawer from "../../components/Navigation/Drawer/Drawer";
 import { connect } from "react-redux";
-import { IState } from "../../store/reducers/rootReducer";
+import {ApplicationState} from "../../store";
 
 interface ILayoutDispatchProps {
   isAuthenticated: boolean;
@@ -13,7 +13,7 @@ interface ILayoutOwnProps {
   children: ReactChild | ReactChildren;
 }
 
-function mapStateToProps(state: IState) {
+function mapStateToProps(state: ApplicationState) {
   return {
     isAuthenticated: !!state.auth.token,
   };

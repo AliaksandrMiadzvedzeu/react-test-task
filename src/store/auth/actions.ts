@@ -1,20 +1,23 @@
 import axios_auth from "axios";
 import axios_user from "../../axios/axios-user";
-import { AUTH_LOGOUT, AUTH_SUCCESS } from "./actionTypes";
-import { ThunkAction } from "redux-thunk";
 import {
-  AuthActions,
+  AUTH_LOGOUT,
+  AUTH_SUCCESS,
+  AuthAction,
   AuthLogoutAction,
-  AuthState,
   AuthSuccessAction,
-} from "../reducers/auth";
+} from "./actionTypes";
+import { ThunkAction } from "redux-thunk";
+import { AuthState } from "./reducers";
+import { ApplicationState } from "../index";
+import { AnyAction } from "redux";
 
 export function auth(
   email: string,
   password: string,
   name?: string,
   surname?: string
-): ThunkAction<Promise<void>, AuthState, {}, AuthActions> {
+): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
   return async (dispatch) => {
     const isRegistration = name != null && surname != null;
 
@@ -72,7 +75,7 @@ export function auth(
 
 export function autoLogout(
   time: number
-): ThunkAction<Promise<void>, AuthState, {}, AuthActions> {
+): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
   return async (dispatch) => {
     setTimeout(() => {
       dispatch(logout());
@@ -94,9 +97,9 @@ export function logout(): AuthLogoutAction {
 
 export function autoLogin(): ThunkAction<
   Promise<void>,
-  AuthState,
+  ApplicationState,
   {},
-  AuthActions
+  AnyAction
 > {
   return async (dispatch) => {
     const token = localStorage.getItem("token");

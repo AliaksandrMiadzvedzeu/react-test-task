@@ -4,37 +4,41 @@ import { Route, Routes } from "react-router-dom";
 import { connect } from "react-redux";
 import LoginForm from "./containers/Auth/LoginForm";
 import RegisterForm from "./containers/Auth/RegisterForm";
-import { autoLogin } from "./store/actions/auth";
+import { autoLogin } from "./store/auth/actions";
 import { ThunkDispatch } from "redux-thunk";
-import { AuthActions, AuthState } from "./store/reducers/auth";
 import NoteList from "./containers/NoteList/NoteList";
 import Logout from "./components/Logout/Logout";
-import { IState } from "./store/reducers/rootReducer";
 import { Navigate } from "react-router-dom";
+import { AuthAction } from "./store/auth/actionTypes";
+import { AuthState } from "./store/auth/reducers";
+import { ApplicationState } from "./store";
+import { AnyAction } from "redux";
 
-interface AppDispatchProps {
+interface DispatchProps {
   autoLogin: () => Promise<void>;
 }
 
-interface AppStateProps {
+interface StateProps {
   isAuthenticated: boolean;
+  email: string;
 }
 
-function mapStateToProps(state: IState) {
+function mapStateToProps(state: ApplicationState): StateProps {
   return {
     isAuthenticated: !!state.auth.token,
+    email: state.auth.email,
   };
 }
 
 function mapDispatchToProps(
-  dispatch: ThunkDispatch<AuthState, {}, AuthActions>
-) {
+  dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
+): DispatchProps {
   return {
     autoLogin: () => dispatch(autoLogin()),
   };
 }
 
-class App extends Component<AppDispatchProps & AppStateProps, {}> {
+class App extends Component<DispatchProps & StateProps, {}> {
   componentDidMount() {
     return this.props.autoLogin();
   }
@@ -44,14 +48,14 @@ class App extends Component<AppDispatchProps & AppStateProps, {}> {
       <Routes>
         <Route path="register" element={<RegisterForm />} />
         <Route path="login" element={<LoginForm />} />
-        <Route path="*" element={<Navigate to="/list" />} />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     );
 
     if (this.props.isAuthenticated) {
       routes = (
         <Routes>
-          <Route path="list" element={<NoteList textColor="blue" />} />
+          <Route path="list" element={<NoteList userId={this.props.email} />} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<Navigate to="/list" />} />
         </Routes>

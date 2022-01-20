@@ -8,9 +8,11 @@
 10) IAction - магчым перарабіць як у travel site
 11) Прыклад як аформиць тэставае заданне https://github.com/peatiscoding/mex-redux-redux-thunk
 12) mapDispatchToProps - прверыць тып экшена і магчыма зрабіць эксперыменты
+13) filter: string - enum
 
 
 Examples of typescript:
 1)https://medium.com/@peatiscoding/typescripts-with-redux-redux-thunk-recipe-fcce4ffca405
 2) https://codesandbox.io/s/thunkdispatch-fmpq4?file=/src/Component.tsx
 3) https://react-redux.js.org/using-react-redux/usage-with-typescript
+4) https://medium.com/@resir014/a-type-safe-approach-to-redux-stores-in-typescript-6474e012b81e

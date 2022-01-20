@@ -8,31 +8,29 @@ import {
   changeNote,
   fetchNotes,
   saveNotes,
-} from "../../store/actions/note";
-import { IAction } from "../../interfaces/IAction";
+} from "../../store/notes/actions";
 import { INote } from "../../interfaces/INote";
-import { INoteState } from "../../store/reducers/note";
 import { connect, MapStateToPropsParam } from "react-redux";
-import { IState } from "../../store/reducers/rootReducer";
 import Loader from "../../components/UI/Loader/Loader";
+import { ApplicationState } from "../../store";
+import { NoteState } from "../../store/notes/reducers";
 
 interface State {
   fontSize: number;
 }
 
 interface OwnProps {
-  textColor: string;
+  userId: string;
 }
 
 interface DispatchProps {
   fetchNotes: (userId: string) => void;
   saveNotes: (userId: string, updatedNotes: Array<INote>) => void;
   changeNote: (note: INote) => void;
-  addNote: (note: INote) => void;
+  addNote: (text: string) => void;
 }
 
 interface StateProps {
-  userId: string;
   notes: Array<INote>;
   updatedNotes: Array<INote>;
   loading: boolean;
@@ -42,9 +40,8 @@ interface StateProps {
 
 type Props = StateProps & DispatchProps & OwnProps;
 
-function mapStateToProps(state: IState): StateProps {
+function mapStateToProps(state: ApplicationState): StateProps {
   return {
-    userId: state.auth.email,
     notes: state.note.notes,
     updatedNotes: state.note.updatedNotes,
     loading: state.note.loading,
@@ -54,14 +51,14 @@ function mapStateToProps(state: IState): StateProps {
 }
 
 function mapDispatchToProps(
-  dispatch: ThunkDispatch<INoteState, {}, AnyAction>
+  dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
 ): DispatchProps {
   return {
     fetchNotes: (userId: string) => dispatch(fetchNotes(userId)),
     saveNotes: (userId: string, updatedNotes: Array<INote>) =>
       dispatch(saveNotes(userId, updatedNotes)),
     changeNote: (note: INote) => dispatch(changeNote(note)),
-    addNote: (note: INote) => dispatch(addNote(note)),
+    addNote: (text: string) => dispatch(addNote(text)),
   };
 }
 
@@ -74,18 +71,14 @@ class NoteList extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.fetchNotes("1");
+    this.props.fetchNotes(this.props.userId);
   }
 
-  // renderNotes() {
-  //   return this.props.notes.map((quiz) => {
-  //     return (
-  //       <li key={quiz.id}>
-  //         <NavLink to={"/quiz/" + quiz.id}>{quiz.name}</NavLink>
-  //       </li>
-  //     );
-  //   });
-  // }
+  renderNotes() {
+    return this.props.updatedNotes.map((note) => {
+      return <li key={note.id}>{note.text}</li>;
+    });
+  }
 
   render() {
     return (
@@ -93,15 +86,21 @@ class NoteList extends Component<Props, State> {
         <div className={classes.QuizWrapper}>
           <h1>Ответьте на все вопросы</h1>
 
-          {/*{this.props.loading && this.props.notes.length !== 0 ? (*/}
-          {/*  <Loader />*/}
-          {/*) : (*/}
-          {/*  <ul>{this.renderNotes()}</ul>*/}
-          {/*)}*/}
+          {this.props.loading && this.props.updatedNotes.length !== 0 ? (
+            <Loader />
+          ) : (
+            <ul>{this.renderNotes()}</ul>
+          )}
         </div>
         <div>
-          <textarea value={"1111"} />
-          {/*<input type="button" value="Save JSON" onClick={saveNotes} />*/}
+          {/*<textarea value={"1111"} />*/}
+          <input
+            type="button"
+            value="Add note"
+            onClick={(e) => {
+              this.props.addNote("AAAAAAAAAA");
+            }}
+          />
         </div>
       </div>
     );

@@ -2,25 +2,28 @@ import React from "react";
 import classes from "./Auth.module.css";
 import Button from "../../components/UI/Button/Button";
 import { connect } from "react-redux";
-import { auth } from "../../store/actions/auth";
+import { auth } from "../../store/auth/actions";
 import { IFormControls } from "../../interfaces/IFormControl";
 import { Form } from "./Form";
 import { ThunkDispatch } from "redux-thunk";
-import { AuthActions, AuthState } from "../../store/reducers/auth";
+import { AuthAction } from "../../store/auth/actionTypes";
+import { AuthState } from "../../store/auth/reducers";
+import { ApplicationState } from "../../store";
+import { AnyAction } from "redux";
 
-interface LoginFormDispatchProps {
+interface DispatchProps {
   auth: (email: string, password: string) => Promise<void>;
 }
 
 function mapDispatchToProps(
-  dispatch: ThunkDispatch<AuthState, {}, AuthActions>
-) {
+  dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
+): DispatchProps {
   return {
     auth: (email: string, password: string) => dispatch(auth(email, password)),
   };
 }
 
-class LoginForm extends Form<LoginFormDispatchProps, IFormControls> {
+class LoginForm extends Form<DispatchProps, IFormControls> {
   state = {
     isFormValid: false,
     serverErrorMessage: "",

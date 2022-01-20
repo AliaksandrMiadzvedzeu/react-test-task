@@ -1,26 +1,14 @@
-import {
-  createStore,
-  combineReducers,
-  applyMiddleware,
-  DeepPartial,
-} from "redux";
-import session, { State as SessionState } from "./session/reducers";
+import {createStore, combineReducers, applyMiddleware, compose, Reducer} from "redux";
+import authReducer, {AuthState } from "./auth/reducers";
+import noteReducer, {NoteState } from "./notes/reducers";
 import thunk from "redux-thunk";
-import { INoteState } from "./reducers/note";
-import { AuthState } from "./reducers/auth";
 
-// export interface RootState {
-//   session: SessionState
-// }
-
-export interface RootState {
-  note: INoteState;
+export interface ApplicationState {
+  note: NoteState;
   auth: AuthState;
 }
 
-export default createStore(
-  combineReducers<RootState>({
-    session,
-  }),
-  applyMiddleware(thunk)
-);
+export const reducers: Reducer<ApplicationState> =   combineReducers<ApplicationState>({
+    note: noteReducer,
+    auth: authReducer,
+})
