@@ -89,7 +89,7 @@ export function saveNotes(): ThunkAction<
 }
 
 export function changeNote(
-  note: INote
+  id: string
 ): ThunkAction<void, ApplicationState, {}, AnyAction> {
   return (
     dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>,
@@ -97,8 +97,8 @@ export function changeNote(
   ): void => {
     const { updatedNotes } = getState().note;
     for (const item of updatedNotes) {
-      if (item.id === note.id) {
-        item.done = note.done;
+      if (item.id === id) {
+        item.done = !item.done;
       }
     }
     dispatch({

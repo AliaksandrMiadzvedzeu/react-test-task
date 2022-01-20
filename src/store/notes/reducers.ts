@@ -77,7 +77,7 @@ export const reducer: Reducer<NoteState, NoteAction> = (
     case CHANGE_NOTE:
       return {
         ...state,
-        updatedNotes: action.updatedNotes || [],
+        updatedNotes: [...action.updatedNotes],
       };
     case ADD_NOTE:
       return {
@@ -87,7 +87,7 @@ export const reducer: Reducer<NoteState, NoteAction> = (
     case SET_FILTER:
       return {
         ...state,
-        filter: action.filter || "",
+        filter: action.filter,
       };
     default:
       return state;

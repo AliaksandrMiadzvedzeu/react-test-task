@@ -27,7 +27,7 @@ interface OwnProps {
 interface DispatchProps {
   fetchNotes: () => void;
   saveNotes: () => void;
-  changeNote: (note: INote) => void;
+  changeNote: (id: string) => void;
   addNote: (note: INote) => void;
   setFilter: (filter: string) => void;
 }
@@ -58,7 +58,7 @@ function mapDispatchToProps(
   return {
     fetchNotes: () => dispatch(fetchNotes()),
     saveNotes: () => dispatch(saveNotes()),
-    changeNote: (note: INote) => dispatch(changeNote(note)),
+    changeNote: (id: string) => dispatch(changeNote(id)),
     addNote: (note: INote) => dispatch(addNote(note)),
     setFilter: (filter: string) => dispatch(setFilter(filter)),
   };
@@ -86,7 +86,11 @@ class NoteList extends Component<Props, State> {
         } else if (this.props.filter === "all") return true;
       })
       .map((note) => {
-        return <li key={note.id}>{note.text}</li>;
+        return (
+          <li onClick={() => this.props.changeNote(note.id)} key={note.id}>
+            {`${note.text} - ${note.done}`}
+          </li>
+        );
       });
   }
 
