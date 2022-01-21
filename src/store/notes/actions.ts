@@ -18,6 +18,8 @@ import {
   ChangeNoteAction,
   AddNoteAction,
   SetFilterAction,
+  REMOVE_NOTE,
+  RemoveNoteAction,
 } from "./actionTypes";
 
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
@@ -126,6 +128,28 @@ export function setFilter(filter: string): SetFilterAction {
   };
 }
 
+export function removeNote(
+  id: string
+): ThunkAction<void, ApplicationState, {}, AnyAction> {
+  return (
+    dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>,
+    getState
+  ): void => {
+    const { updatedNotes } = getState().note;
+    for (const item of updatedNotes) {
+      if (item.id === id) {
+        const index = updatedNotes.indexOf(item);
+        updatedNotes.splice(index, 1);
+        break;
+      }
+    }
+    dispatch({
+      type: REMOVE_NOTE,
+      updatedNotes,
+    });
+  };
+}
+
 export function fetchNotesStart(): FetchNotesStartAction {
   return {
     type: FETCH_NOTES_START,
@@ -180,4 +204,5 @@ export type NoteAction =
   | SaveNotesErrorAction
   | ChangeNoteAction
   | AddNoteAction
-  | SetFilterAction;
+  | SetFilterAction
+  | RemoveNoteAction;

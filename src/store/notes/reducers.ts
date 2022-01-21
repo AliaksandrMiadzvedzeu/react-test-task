@@ -8,6 +8,7 @@ import {
   CHANGE_NOTE,
   SET_FILTER,
   ADD_NOTE,
+  REMOVE_NOTE,
 } from "./actionTypes";
 import { Reducer } from "redux";
 import { NoteAction } from "./actions";
@@ -93,6 +94,11 @@ export const reducer: Reducer<NoteState, NoteAction> = (
       return {
         ...state,
         filter: action.filter,
+      };
+    case REMOVE_NOTE:
+      return {
+        ...state,
+        updatedNotes: [...action.updatedNotes],
       };
     default:
       return state;

@@ -10,6 +10,7 @@ export const SAVE_NOTES_ERROR = "SAVE_NOTES_ERROR";
 export const CHANGE_NOTE = "CHANGE_NOTE";
 export const SET_FILTER = "SET_FILTER";
 export const ADD_NOTE = "ADD_NOTE";
+export const REMOVE_NOTE = "REMOVE_NOTE";
 
 export interface FetchNotesStartAction extends Action {
   type: "FETCH_NOTES_START";
@@ -53,4 +54,9 @@ export interface AddNoteAction extends Action {
 export interface SetFilterAction extends Action {
   type: "SET_FILTER";
   filter: string;
+}
+
+export interface RemoveNoteAction extends Action {
+  type: "REMOVE_NOTE";
+  updatedNotes: Array<INote>;
 }

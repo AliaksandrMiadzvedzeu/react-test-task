@@ -6,6 +6,7 @@ import {
   addNote,
   changeNote,
   fetchNotes,
+  removeNote,
   saveNotes,
   setFilter,
 } from "../../store/notes/actions";
@@ -28,6 +29,7 @@ interface DispatchProps {
   changeNote: (id: string) => void;
   addNote: (note: INote) => void;
   setFilter: (filter: string) => void;
+  removeNote: (id: string) => void;
 }
 
 interface StateProps {
@@ -59,6 +61,7 @@ function mapDispatchToProps(
     changeNote: (id: string) => dispatch(changeNote(id)),
     addNote: (note: INote) => dispatch(addNote(note)),
     setFilter: (filter: string) => dispatch(setFilter(filter)),
+    removeNote: (id: string) => dispatch(removeNote(id)),
   };
 }
 
@@ -88,7 +91,6 @@ class NoteList extends Component<Props, State> {
       .map((note, index) => {
         return (
           <tr key={note.id}>
-            <th scope="row">{index + 1}</th>
             <td>{note.text}</td>
             <td>
               <div className="form-check">
@@ -104,6 +106,15 @@ class NoteList extends Component<Props, State> {
                   {note.done ? "completed" : "waiting"}
                 </label>
               </div>
+            </td>
+            <td>
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={() => this.props.removeNote(note.id)}
+              >
+                Remove
+              </button>
             </td>
           </tr>
         );
@@ -168,14 +179,14 @@ class NoteList extends Component<Props, State> {
             <Loader />
           ) : (
             <table className="table table-striped">
-              <col style={{ width: "10%" }} />
               <col style={{ width: "80%" }} />
+              <col style={{ width: "10%" }} />
               <col style={{ width: "10%" }} />
               <thead>
                 <tr>
-                  <th scope="col">#</th>
                   <th scope="col">Note</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>{this.renderNotes()}</tbody>
