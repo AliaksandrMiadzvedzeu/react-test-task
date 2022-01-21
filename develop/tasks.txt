@@ -14,6 +14,8 @@
 16) Дабавиць праверку size of input text
 17) БД update
 18) Тэкставая падсветка што дадзеныя пайшлі на сервер
+19) Для getFilteredNotes дабавиць хук захощваць значэнне и пратэсцираваць
+20) video about bootstrap
 
 
 Examples of typescript:

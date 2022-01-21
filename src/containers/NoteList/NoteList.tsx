@@ -75,53 +75,57 @@ class NoteList extends Component<Props, State> {
     };
   }
 
+  getFilteredNotes(filter: string): Array<INote> {
+    return this.props.updatedNotes.filter((value) => {
+      if (filter === "completed") {
+        return value.done;
+      } else if (filter === "waiting") {
+        return !value.done;
+      } else if (filter === "all") return true;
+    });
+  }
+
   componentDidMount() {
     this.props.fetchNotes();
   }
 
   renderNotes() {
-    return this.props.updatedNotes
-      .filter((value) => {
-        if (this.props.filter === "completed") {
-          return value.done;
-        } else if (this.props.filter === "waiting") {
-          return !value.done;
-        } else if (this.props.filter === "all") return true;
-      })
-      .map((note, index) => {
-        return (
-          <tr key={note.id}>
-            <td>{note.text}</td>
-            <td>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckChecked"
-                  checked={!note.done}
-                  onChange={() => this.props.changeNote(note.id)}
-                />
-                <label className="form-check-label" htmlFor="flexCheckChecked">
-                  {note.done ? "completed" : "waiting"}
-                </label>
-              </div>
-            </td>
-            <td>
-              <button
-                type="button"
-                className="btn btn-outline-info"
-                onClick={() => this.props.removeNote(note.id)}
-              >
-                Remove
-              </button>
-            </td>
-          </tr>
-        );
-      });
+    return this.getFilteredNotes(this.props.filter).map((note, index) => {
+      return (
+        <tr key={note.id}>
+          <td>{note.text}</td>
+          <td>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckChecked"
+                checked={!note.done}
+                onChange={() => this.props.changeNote(note.id)}
+              />
+              <label className="form-check-label" htmlFor="flexCheckChecked">
+                {note.done ? "completed" : "waiting"}
+              </label>
+            </div>
+          </td>
+          <td>
+            <button
+              type="button"
+              className="btn btn-outline-info"
+              onClick={() => this.props.removeNote(note.id)}
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      );
+    });
   }
 
   render() {
+    const completedNotesCount = this.getFilteredNotes("completed").length;
+
     return (
       <div
         className="container mx-auto  mt-3"
@@ -142,7 +146,7 @@ class NoteList extends Component<Props, State> {
               checked={this.props.filter === "all"}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault1">
-              All
+              All ({this.props.updatedNotes.length})
             </label>
           </div>
           <br />
@@ -156,7 +160,7 @@ class NoteList extends Component<Props, State> {
               checked={this.props.filter === "completed"}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault2">
-              Completed
+              Completed ({completedNotesCount})
             </label>
           </div>
 
@@ -170,7 +174,7 @@ class NoteList extends Component<Props, State> {
               checked={this.props.filter === "waiting"}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault3">
-              Waiting
+              Waiting ({this.props.updatedNotes.length - completedNotesCount})
             </label>
           </div>
         </div>
