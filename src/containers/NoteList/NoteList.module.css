@@ -1,38 +1,38 @@
 
-.NodeList {
-    display: flex;
-    justify-content: center;
-    padding-top: 100px;
-    flex-grow: 1;
-    width: 100%;
-    background: linear-gradient(270deg, #cef2fa 0%, #59bfef 100%);
-}
-
-.NodeList > div {
-    width: 100%;
-    max-width: 600px;
-    padding: 0 20px;
-}
-
-.NodeList h1 {
-    color: #fff;
-    text-align: center;
-}
-
-/*.Quiz {*/
+/*.NodeList {*/
 /*    display: flex;*/
 /*    justify-content: center;*/
 /*    padding-top: 100px;*/
 /*    flex-grow: 1;*/
 /*    width: 100%;*/
-/*    background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%);*/
+/*    background: linear-gradient(270deg, #cef2fa 0%, #59bfef 100%);*/
 /*}*/
 
-/*.Quiz h1 {*/
+/*.NodeList > div {*/
+/*    width: 100%;*/
+/*    max-width: 600px;*/
+/*    padding: 0 20px;*/
+/*}*/
+
+/*.NodeList h1 {*/
 /*    color: #fff;*/
-/*    margin-left: 10px;*/
+/*    text-align: center;*/
 /*}*/
 
-/*.QuizWrapper {*/
-/*    width: 600px;*/
-/*}*/
+.NoteList {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    flex-grow: 1;
+    width: 100%;
+    background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%);
+}
+
+.NoteList h1 {
+    color: #fff;
+    margin-left: 10px;
+}
+
+.NoteListWrapper {
+    width: 600px;
+}

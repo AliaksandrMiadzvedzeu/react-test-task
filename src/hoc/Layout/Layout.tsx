@@ -3,7 +3,7 @@ import classes from "./Layout.module.css";
 import MenuToggle from "../../components/Navigation/MenuToggle/MenuToggle";
 import Drawer from "../../components/Navigation/Drawer/Drawer";
 import { connect } from "react-redux";
-import {ApplicationState} from "../../store";
+import { ApplicationState } from "../../store";
 
 interface ILayoutDispatchProps {
   isAuthenticated: boolean;
@@ -39,6 +39,27 @@ class Layout extends Component<ILayoutDispatchProps & ILayoutOwnProps> {
   render() {
     return (
       <div className={classes.Layout}>
+        <ul className="nav justify-content-end bg-warning">
+          <li className="nav-item">
+            <a className="nav-link active" href="#">
+              Active
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">
+              Link
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">
+              Link
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+
         <Drawer
           isOpen={this.state.menu}
           onClose={this.menuCloseHandler}
