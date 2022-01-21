@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import classes from "./Menu.module.css";
 
 interface ILink {
   to: string;
@@ -19,7 +20,7 @@ class Menu extends Component<MenuProps> {
           <NavLink
             to={link.to}
             className={({ isActive }) =>
-              "nav-link" + (isActive ? " active" : "")
+              "nav-link" + (isActive ? " " + classes.active : "")
             }
           >
             {link.label}
@@ -47,7 +48,7 @@ class Menu extends Component<MenuProps> {
             ? `Welcome ${this.props.userName}`
             : null}
         </div>
-        <ul className="nav nav-pills justify-content-end ">
+        <ul className={"nav nav-pills justify-content-end " + classes.navPills}>
           {this.renderLinks(links)}
         </ul>
       </div>

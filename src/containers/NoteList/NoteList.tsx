@@ -15,9 +15,10 @@ import { connect } from "react-redux";
 import Loader from "../../components/UI/Loader/Loader";
 import { ApplicationState } from "../../store";
 import { INote } from "../../store/notes/reducers";
+import { isEqual } from "../../lib/isEqual";
 
 interface State {
-  fontSize: number;
+  newNoteText: string;
 }
 
 interface OwnProps {
@@ -67,12 +68,10 @@ function mapDispatchToProps(
 }
 
 class NoteList extends Component<Props, State> {
-  newNoteInput = createRef<HTMLInputElement>();
-
   constructor(prop: Props) {
     super(prop);
     this.state = {
-      fontSize: 12,
+      newNoteText: "",
     };
   }
 
@@ -111,7 +110,7 @@ class NoteList extends Component<Props, State> {
             <td>
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className="btn btn-outline-info"
                 onClick={() => this.props.removeNote(note.id)}
               >
                 Remove
@@ -124,7 +123,10 @@ class NoteList extends Component<Props, State> {
 
   render() {
     return (
-      <div className="container mx-auto  mt-3">
+      <div
+        className="container mx-auto  mt-3"
+        style={{ color: this.props.textColor }}
+      >
         <h1 className="display-6 text-center">Notes</h1>
 
         <br />
@@ -197,24 +199,29 @@ class NoteList extends Component<Props, State> {
           <input
             type="text"
             className="form-control"
-            placeholder="Recipient's username"
-            aria-label="Recipient's username"
+            placeholder="Text of note"
+            aria-label="Text of note"
             aria-describedby="button-addon2"
-            ref={this.newNoteInput}
+            maxLength={100}
+            value={this.state.newNoteText}
+            onChange={(e) => this.setState({ newNoteText: e.target.value })}
           />
           <div className="input-group-append">
             <button
-              className="btn btn-outline-danger"
+              className="btn btn-warning"
               type="button"
               id="button-addon2"
               onClick={() => {
-                let new_text = this.newNoteInput.current?.value || "";
-                const note: INote = {
-                  id: "id" + this.props.updatedNotes.length,
-                  text: new_text,
-                  done: false,
-                };
-                this.props.addNote(note);
+                //let new_text = this.state.newNoteText;
+                if (this.state.newNoteText.length > 0) {
+                  const note: INote = {
+                    id: "id" + this.props.updatedNotes.length,
+                    text: this.state.newNoteText,
+                    done: false,
+                  };
+                  this.props.addNote(note);
+                  this.setState({ newNoteText: "" });
+                }
               }}
             >
               Add note
@@ -226,7 +233,8 @@ class NoteList extends Component<Props, State> {
           <button
             type="button"
             onClick={this.props.saveNotes.bind(this)}
-            className={"btn btn-secondary " + classes.saveButton}
+            className={"btn btn-warning " + classes.saveButton}
+            disabled={isEqual<INote>(this.props.notes, this.props.updatedNotes)}
           >
             Save notes
           </button>
