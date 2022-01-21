@@ -1,5 +1,4 @@
-import React, { Component, createRef, useRef } from "react";
-import classes from "../NoteList/NoteList.module.css";
+import React, { Component, createRef } from "react";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 
@@ -80,9 +79,9 @@ class NoteList extends Component<Props, State> {
   renderNotes() {
     return this.props.updatedNotes
       .filter((value) => {
-        if (this.props.filter === "fulfilled") {
+        if (this.props.filter === "completed") {
           return value.done;
-        } else if (this.props.filter === "no_fulfilled") {
+        } else if (this.props.filter === "waiting") {
           return !value.done;
         } else if (this.props.filter === "all") return true;
       })
@@ -109,46 +108,49 @@ class NoteList extends Component<Props, State> {
           <br />
 
           <div className="container d-flex justify-content-center">
-            <div className="btn-group btn-group-toggle" data-toggle="buttons">
-              <label
-                className="btn btn-secondary active"
-                style={{ minWidth: "120px" }}
-              >
-                <input
-                  type="radio"
-                  name="options"
-                  id="option1"
-                  checked
-                  onClick={this.props.setFilter.bind(this, "all")}
-                />
+            <div className="form-check mx-2">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault1"
+                onChange={this.props.setFilter.bind(this, "all")}
+                checked={this.props.filter === "all"}
+              />
+              <label className="form-check-label" htmlFor="flexRadioDefault1">
                 All
               </label>
-              <label
-                className="btn btn-secondary"
-                style={{ minWidth: "120px" }}
-              >
-                <input
-                  type="radio"
-                  name="options"
-                  id="option2"
-                  onClick={this.props.setFilter.bind(this, "fulfilled")}
-                />
+            </div>
+            <br />
+            <div className="form-check mx-2">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+                onChange={this.props.setFilter.bind(this, "completed")}
+                checked={this.props.filter === "completed"}
+              />
+              <label className="form-check-label" htmlFor="flexRadioDefault2">
                 Completed
               </label>
-              <label
-                className="btn btn-secondary"
-                style={{ minWidth: "120px" }}
-              >
-                <input
-                  type="radio"
-                  name="options"
-                  id="option3"
-                  onClick={this.props.setFilter.bind(this, "no_fulfilled")}
-                />
+            </div>
+
+            <div className="form-check mx-2">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault3"
+                onChange={this.props.setFilter.bind(this, "waiting")}
+                checked={this.props.filter === "waiting"}
+              />
+              <label className="form-check-label" htmlFor="flexRadioDefault3">
                 Current
               </label>
             </div>
           </div>
+
           <br />
           {this.props.loading && this.props.updatedNotes.length !== 0 ? (
             <Loader />

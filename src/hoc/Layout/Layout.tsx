@@ -1,76 +1,39 @@
 import React, { Component, ReactChild, ReactChildren } from "react";
 import classes from "./Layout.module.css";
-import MenuToggle from "../../components/Navigation/MenuToggle/MenuToggle";
-import Drawer from "../../components/Navigation/Drawer/Drawer";
 import { connect } from "react-redux";
 import { ApplicationState } from "../../store";
+import Menu from "../../components/Navigation/Menu/Menu";
 
-interface ILayoutDispatchProps {
+interface StateProps {
   isAuthenticated: boolean;
+  name?: string;
+  surname?: string;
 }
 
-interface ILayoutOwnProps {
+interface OwnProps {
   children: ReactChild | ReactChildren;
 }
 
-function mapStateToProps(state: ApplicationState) {
+function mapStateToProps(state: ApplicationState): StateProps {
   return {
     isAuthenticated: !!state.auth.token,
+    name: state.auth.name,
+    surname: state.auth.surname,
   };
 }
 
-class Layout extends Component<ILayoutDispatchProps & ILayoutOwnProps> {
-  state = {
-    menu: false,
-  };
-
-  toggleMenuHandler = () => {
-    this.setState({
-      menu: !this.state.menu,
-    });
-  };
-
-  menuCloseHandler = () => {
-    this.setState({
-      menu: false,
-    });
-  };
-
+class Layout extends Component<StateProps & OwnProps> {
   render() {
+    let userName = this.props.name ? this.props.name : "";
+    if (userName.length > 0 && this.props.surname) userName += " ";
+    if (this.props.surname) userName += this.props.surname;
+
     return (
       <div className={classes.Layout}>
-        <ul className="nav justify-content-end bg-warning">
-          <li className="nav-item">
-            <a className="nav-link active" href="#">
-              Active
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link disabled">Disabled</a>
-          </li>
-        </ul>
-
-        <Drawer
-          isOpen={this.state.menu}
-          onClose={this.menuCloseHandler}
+        <Menu
           isAuthenticated={this.props.isAuthenticated}
+          userName={userName}
         />
-
-        <MenuToggle
-          onToggle={this.toggleMenuHandler}
-          isOpen={this.state.menu}
-        />
-
         <main>{this.props.children}</main>
       </div>
     );

@@ -9,6 +9,8 @@
 11) Прыклад як аформиць тэставае заданне https://github.com/peatiscoding/mex-redux-redux-thunk
 12) mapDispatchToProps - прверыць тып экшена і магчыма зрабіць эксперыменты
 13) filter: string - enum
+14) павыдаляць кукейс имени и прозвишча - праверыць паводзины
+15) фокусы на палях увода
 
 
 Examples of typescript:
