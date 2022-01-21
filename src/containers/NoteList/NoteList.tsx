@@ -87,11 +87,23 @@ class NoteList extends Component<Props, State> {
       })
       .map((note, index) => {
         return (
-          <tr key={note.id} onClick={() => this.props.changeNote(note.id)}>
+          <tr key={note.id}>
             <th scope="row">{index + 1}</th>
             <td>{note.text}</td>
             <td>
-              <span>{String(note.done)}</span>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                  checked={!note.done}
+                  onChange={() => this.props.changeNote(note.id)}
+                />
+                <label className="form-check-label" htmlFor="flexCheckChecked">
+                  {note.done ? "completed" : "waiting"}
+                </label>
+              </div>
             </td>
           </tr>
         );
@@ -146,7 +158,7 @@ class NoteList extends Component<Props, State> {
                 checked={this.props.filter === "waiting"}
               />
               <label className="form-check-label" htmlFor="flexRadioDefault3">
-                Current
+                Waiting
               </label>
             </div>
           </div>
