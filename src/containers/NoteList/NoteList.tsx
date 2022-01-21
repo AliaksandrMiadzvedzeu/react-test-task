@@ -1,6 +1,7 @@
 import React, { Component, createRef } from "react";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
+import classes from "./NoteList.module.css";
 
 import {
   addNote,
@@ -123,119 +124,115 @@ class NoteList extends Component<Props, State> {
 
   render() {
     return (
-      <div className="container" style={{ width: "100%" }}>
+      <div className="container mx-auto  mt-3">
+        <h1 className="display-6 text-center">Notes</h1>
+
         <br />
-        <div className="container" style={{ width: "100%", padding: 0 }}>
-          <h1 className="display-6 text-center">Notes</h1>
 
-          <br />
-
-          <div className="container d-flex justify-content-center">
-            <div className="form-check mx-2">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
-                onChange={this.props.setFilter.bind(this, "all")}
-                checked={this.props.filter === "all"}
-              />
-              <label className="form-check-label" htmlFor="flexRadioDefault1">
-                All
-              </label>
-            </div>
-            <br />
-            <div className="form-check mx-2">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
-                onChange={this.props.setFilter.bind(this, "completed")}
-                checked={this.props.filter === "completed"}
-              />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Completed
-              </label>
-            </div>
-
-            <div className="form-check mx-2">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault3"
-                onChange={this.props.setFilter.bind(this, "waiting")}
-                checked={this.props.filter === "waiting"}
-              />
-              <label className="form-check-label" htmlFor="flexRadioDefault3">
-                Waiting
-              </label>
-            </div>
-          </div>
-
-          <br />
-          {this.props.loading && this.props.updatedNotes.length !== 0 ? (
-            <Loader />
-          ) : (
-            <table className="table table-striped">
-              <col style={{ width: "80%" }} />
-              <col style={{ width: "10%" }} />
-              <col style={{ width: "10%" }} />
-              <thead>
-                <tr>
-                  <th scope="col">Note</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>{this.renderNotes()}</tbody>
-            </table>
-          )}
-
-          <br />
-          <div className="input-group">
+        <div className="container d-flex justify-content-center">
+          <div className="form-check mx-2">
             <input
-              type="text"
-              className="form-control"
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="button-addon2"
-              ref={this.newNoteInput}
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              onChange={this.props.setFilter.bind(this, "all")}
+              checked={this.props.filter === "all"}
             />
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-danger"
-                type="button"
-                id="button-addon2"
-                onClick={() => {
-                  let new_text = this.newNoteInput.current?.value || "";
-                  const note: INote = {
-                    id: "id" + this.props.updatedNotes.length,
-                    text: new_text,
-                    done: false,
-                  };
-                  this.props.addNote(note);
-                }}
-              >
-                Add note
-              </button>
-            </div>
+            <label className="form-check-label" htmlFor="flexRadioDefault1">
+              All
+            </label>
           </div>
           <br />
-          <div className="d-flex justify-content-center">
+          <div className="form-check mx-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+              onChange={this.props.setFilter.bind(this, "completed")}
+              checked={this.props.filter === "completed"}
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault2">
+              Completed
+            </label>
+          </div>
+
+          <div className="form-check mx-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault3"
+              onChange={this.props.setFilter.bind(this, "waiting")}
+              checked={this.props.filter === "waiting"}
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault3">
+              Waiting
+            </label>
+          </div>
+        </div>
+
+        <br />
+        {this.props.loading && this.props.updatedNotes.length !== 0 ? (
+          <Loader />
+        ) : (
+          <table className="table table-striped">
+            <col style={{ width: "80%" }} />
+            <col style={{ width: "10%" }} />
+            <col style={{ width: "10%" }} />
+            <thead>
+              <tr>
+                <th scope="col">Note</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>{this.renderNotes()}</tbody>
+          </table>
+        )}
+
+        <br />
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Recipient's username"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+            ref={this.newNoteInput}
+          />
+          <div className="input-group-append">
             <button
+              className="btn btn-outline-danger"
               type="button"
-              className="btn btn-secondary"
-              onClick={this.props.saveNotes.bind(this)}
-              style={{ width: "200px" }}
+              id="button-addon2"
+              onClick={() => {
+                let new_text = this.newNoteInput.current?.value || "";
+                const note: INote = {
+                  id: "id" + this.props.updatedNotes.length,
+                  text: new_text,
+                  done: false,
+                };
+                this.props.addNote(note);
+              }}
             >
-              Save notes
+              Add note
             </button>
           </div>
-          <br />
-          <br />
         </div>
+        <br />
+        <div className="d-flex justify-content-center">
+          <button
+            type="button"
+            onClick={this.props.saveNotes.bind(this)}
+            className={"btn btn-secondary " + classes.saveButton}
+          >
+            Save notes
+          </button>
+        </div>
+        <br />
+        <br />
       </div>
     );
   }
