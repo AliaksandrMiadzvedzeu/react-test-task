@@ -32,7 +32,7 @@ class LoginForm extends Form<DispatchProps, IFormControls> {
         value: "",
         type: "email",
         label: "Email",
-        errorMessage: "Введите корректный email",
+        errorMessage: "Please enter a valid email address",
         valid: false,
         touched: false,
         validation: {
@@ -43,8 +43,8 @@ class LoginForm extends Form<DispatchProps, IFormControls> {
       password: {
         value: "",
         type: "password",
-        label: "Пароль",
-        errorMessage: "Введите корректный пароль",
+        label: "Password",
+        errorMessage: "Please enter a correct password",
         valid: false,
         touched: false,
         validation: {
@@ -74,9 +74,9 @@ class LoginForm extends Form<DispatchProps, IFormControls> {
 
   render() {
     return (
-      <div className={classes.Auth}>
-        <div>
-          <h1>Авторизация</h1>
+      <div className="d-flex justify-content-center flex-grow-1 pt-5">
+        <div className="w-100 px-1" style={{ maxWidth: "600px" }}>
+          <h1 className="text-center mb-4">Sign in</h1>
 
           <form onSubmit={this.submitHandler} className={classes.AuthForm}>
             {this.renderInputs()}
@@ -86,7 +86,7 @@ class LoginForm extends Form<DispatchProps, IFormControls> {
               onClick={this.loginHandler}
               disabled={!this.state.isFormValid}
             >
-              Войти
+              Next
             </Button>
             {this.state.serverErrorMessage.trim().length > 0 ? (
               <div className={classes.Error}>

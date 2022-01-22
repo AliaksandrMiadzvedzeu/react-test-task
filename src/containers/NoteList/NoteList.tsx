@@ -184,13 +184,17 @@ class NoteList extends Component<Props, State> {
           <Loader />
         ) : (
           <table className="table table-striped">
-            <col style={{ width: "80%" }} />
-            <col style={{ width: "10%" }} />
-            <col style={{ width: "10%" }} />
+            <col style={{ width: "80%" }} className="w-80" />
+            <col style={{ width: "10%" }} className="w-10" />
+            <col style={{ width: "10%" }} className="w-10" />
             <thead>
               <tr>
-                <th scope="col">Note</th>
-                <th scope="col">Status</th>
+                <th className="w-80" scope="col">
+                  Note
+                </th>
+                <th className="w-10" scope="col">
+                  Status
+                </th>
                 <th scope="col">Action</th>
               </tr>
             </thead>

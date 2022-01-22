@@ -16,7 +16,7 @@ class Menu extends Component<MenuProps> {
   renderLinks(links: Array<ILink>) {
     return links.map((link, index) => {
       return (
-        <li key={index} className="nav-item">
+        <li key={index} className={classes.mainNavItem}>
           <NavLink
             to={link.to}
             className={({ isActive }) =>
@@ -34,18 +34,18 @@ class Menu extends Component<MenuProps> {
     const links = [];
 
     if (this.props.isAuthenticated) {
-      links.push({ to: "/list", label: "Список" });
-      links.push({ to: "/logout", label: "Выйти" });
+      links.push({ to: "/list", label: "Notes" });
+      links.push({ to: "/logout", label: "Sign out" });
     } else {
-      links.push({ to: "/login", label: "Авторизация" });
-      links.push({ to: "/register", label: "Регистрация" });
+      links.push({ to: "/login", label: "Sign in" });
+      links.push({ to: "/register", label: "Create account" });
     }
 
     return (
-      <div className="d-flex justify-content-between bg-warning">
+      <div className={"d-flex justify-content-between " + classes.wrapper}>
         <div className="d-flex align-items-center px-3">
           {this.props.isAuthenticated && this.props.userName.length > 0
-            ? `Welcome ${this.props.userName}`
+            ? `Hello ${this.props.userName}`
             : null}
         </div>
         <ul className={"nav nav-pills justify-content-end " + classes.navPills}>
