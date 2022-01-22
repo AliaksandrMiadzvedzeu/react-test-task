@@ -8,6 +8,7 @@ import {
 import { ThunkAction } from "redux-thunk";
 import { ApplicationState } from "../index";
 import { AnyAction } from "redux";
+import { encodeEmail } from "../../lib/encodeEmail";
 
 export function auth(
   email: string,
@@ -16,17 +17,13 @@ export function auth(
   surname?: string
 ): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
   return async (dispatch) => {
-    const isRegistration = name != null && surname != null;
+    const isRegistration = name != null;
     const api_key = process.env.REACT_APP_API_KEY;
 
-    let url =
-      "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" +
-      api_key;
+    let url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${api_key}`;
 
     if (isRegistration) {
-      url =
-        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
-        api_key;
+      url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${api_key}`;
     }
 
     let idToken: string, localId: string, expiresIn: number;
@@ -39,12 +36,12 @@ export function auth(
         expiresIn = response.data?.expiresIn;
 
         if (isRegistration) {
-          return axios.put(`/users/${email.replace(".", "^")}.json`, {
+          return axios.put(`/users/${encodeEmail(email)}.json`, {
             name: name,
             surname: surname,
           });
         } else {
-          return axios.get(`/users/${email.replace(".", "^")}.json`);
+          return axios.get(`/users/${encodeEmail(email)}.json`);
         }
       })
       .then((response) => {
