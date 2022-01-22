@@ -3,12 +3,10 @@ import axios_user from "../../axios/axios-user";
 import {
   AUTH_LOGOUT,
   AUTH_SUCCESS,
-  AuthAction,
   AuthLogoutAction,
   AuthSuccessAction,
 } from "./actionTypes";
 import { ThunkAction } from "redux-thunk";
-import { AuthState } from "./reducers";
 import { ApplicationState } from "../index";
 import { AnyAction } from "redux";
 

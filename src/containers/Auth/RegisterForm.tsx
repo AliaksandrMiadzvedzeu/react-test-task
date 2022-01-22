@@ -6,8 +6,6 @@ import { auth } from "../../store/auth/actions";
 import { IFormControls } from "./IFormControl";
 import { Form } from "./Form";
 import { ThunkDispatch } from "redux-thunk";
-import { AuthAction } from "../../store/auth/actionTypes";
-import { AuthState } from "../../store/auth/reducers";
 import { ApplicationState } from "../../store";
 import { AnyAction } from "redux";
 

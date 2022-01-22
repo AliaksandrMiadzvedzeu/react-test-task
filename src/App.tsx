@@ -6,11 +6,9 @@ import LoginForm from "./containers/Auth/LoginForm";
 import RegisterForm from "./containers/Auth/RegisterForm";
 import { autoLogin } from "./store/auth/actions";
 import { ThunkDispatch } from "redux-thunk";
-import NoteList from "./containers/NoteList/NoteList";
+import Notes from "./containers/NoteList/Notes";
 import Logout from "./components/Logout/Logout";
 import { Navigate } from "react-router-dom";
-import { AuthAction } from "./store/auth/actionTypes";
-import { AuthState } from "./store/auth/reducers";
 import { ApplicationState } from "./store";
 import { AnyAction } from "redux";
 
@@ -55,7 +53,7 @@ class App extends Component<DispatchProps & StateProps, {}> {
     if (this.props.isAuthenticated) {
       routes = (
         <Routes>
-          <Route path="list" element={<NoteList textColor="black" />} />
+          <Route path="list" element={<Notes textColor="black" />} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<Navigate to="/list" />} />
         </Routes>

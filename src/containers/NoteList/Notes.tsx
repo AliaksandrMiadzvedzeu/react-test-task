@@ -1,7 +1,7 @@
-import React, { Component, createRef, useRef } from "react";
+import React, { Component } from "react";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import classes from "./NoteList.module.css";
+import classes from "./Notes.module.css";
 
 import {
   addNote,
@@ -67,7 +67,7 @@ function mapDispatchToProps(
   };
 }
 
-class NoteList extends Component<Props, State> {
+class Notes extends Component<Props, State> {
   noteCounter: number = 0;
   constructor(props: Props) {
     super(props);
@@ -254,4 +254,4 @@ class NoteList extends Component<Props, State> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoteList);
+export default connect(mapStateToProps, mapDispatchToProps)(Notes);
