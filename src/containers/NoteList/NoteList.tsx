@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component, createRef, useRef } from "react";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import classes from "./NoteList.module.css";
@@ -68,8 +68,9 @@ function mapDispatchToProps(
 }
 
 class NoteList extends Component<Props, State> {
-  constructor(prop: Props) {
-    super(prop);
+  noteCounter: number = 0;
+  constructor(props: Props) {
+    super(props);
     this.state = {
       newNoteText: "",
     };
@@ -182,18 +183,17 @@ class NoteList extends Component<Props, State> {
             <Loader />
           ) : (
             <table className="table table-striped">
-              <col style={{ width: "80%" }} className="w-80" />
-              <col style={{ width: "10%" }} className="w-10" />
-              <col style={{ width: "10%" }} className="w-10" />
               <thead>
                 <tr>
-                  <th className="w-80" scope="col">
+                  <th style={{ width: "80%" }} scope="col">
                     Note
                   </th>
-                  <th className="w-10" scope="col">
+                  <th style={{ width: "10%" }} scope="col">
                     Status
                   </th>
-                  <th scope="col">Action</th>
+                  <th style={{ width: "10%" }} scope="col">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>{this.renderNotes()}</tbody>
@@ -220,12 +220,13 @@ class NoteList extends Component<Props, State> {
                 onClick={() => {
                   if (this.state.newNoteText.length > 0) {
                     const note: INote = {
-                      id: "id" + this.props.updatedNotes.length,
+                      id: "id" + this.props.notes + this.noteCounter,
                       text: this.state.newNoteText,
                       done: false,
                     };
                     this.props.addNote(note);
                     this.setState({ newNoteText: "" });
+                    this.noteCounter++;
                   }
                 }}
               >
