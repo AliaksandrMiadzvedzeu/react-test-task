@@ -17,6 +17,12 @@ import { ApplicationState } from "../../store";
 import { INote } from "../../store/notes/reducers";
 import { isEqual } from "../../lib/isEqual";
 
+export enum FilterType {
+  All = "all",
+  WAITING = "waiting",
+  COMPLETED = "completed",
+}
+
 interface State {
   newNoteText: string;
 }
@@ -78,11 +84,12 @@ class Notes extends Component<Props, State> {
 
   getFilteredNotes(filter: string): Array<INote> {
     return this.props.updatedNotes.filter((value) => {
-      if (filter === "completed") {
+      if (filter === FilterType.COMPLETED) {
         return value.done;
-      } else if (filter === "waiting") {
+      } else if (filter === FilterType.WAITING) {
         return !value.done;
-      } else if (filter === "all") return true;
+      }
+      return true;
     });
   }
 
@@ -106,7 +113,7 @@ class Notes extends Component<Props, State> {
                 onChange={() => this.props.changeNote(note.id)}
               />
               <label className="form-check-label" htmlFor="flexCheckChecked">
-                {note.done ? "completed" : "waiting"}
+                {note.done ? FilterType.COMPLETED : FilterType.WAITING}
               </label>
             </div>
           </td>
@@ -139,8 +146,8 @@ class Notes extends Component<Props, State> {
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault1"
-                onChange={this.props.setFilter.bind(this, "all")}
-                checked={this.props.filter === "all"}
+                onChange={this.props.setFilter.bind(this, FilterType.All)}
+                checked={this.props.filter === FilterType.All}
               />
               <label className="form-check-label" htmlFor="flexRadioDefault1">
                 All ({this.props.updatedNotes.length})
@@ -153,8 +160,8 @@ class Notes extends Component<Props, State> {
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault2"
-                onChange={this.props.setFilter.bind(this, "completed")}
-                checked={this.props.filter === "completed"}
+                onChange={this.props.setFilter.bind(this, FilterType.COMPLETED)}
+                checked={this.props.filter === FilterType.COMPLETED}
               />
               <label className="form-check-label" htmlFor="flexRadioDefault2">
                 Completed ({completedNotesCount})
@@ -167,8 +174,8 @@ class Notes extends Component<Props, State> {
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault3"
-                onChange={this.props.setFilter.bind(this, "waiting")}
-                checked={this.props.filter === "waiting"}
+                onChange={this.props.setFilter.bind(this, FilterType.WAITING)}
+                checked={this.props.filter === FilterType.WAITING}
               />
               <label className="form-check-label" htmlFor="flexRadioDefault3">
                 Waiting ({this.props.updatedNotes.length - completedNotesCount})
