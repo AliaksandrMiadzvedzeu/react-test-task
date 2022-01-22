@@ -16,11 +16,11 @@ class Menu extends Component<MenuProps> {
   renderLinks(links: Array<ILink>) {
     return links.map((link, index) => {
       return (
-        <li key={index} className={classes.mainNavItem}>
+        <li key={index} className="nav-item">
           <NavLink
             to={link.to}
             className={({ isActive }) =>
-              "nav-link" + (isActive ? " " + classes.active : "")
+              "nav-link " + (isActive ? classes.active : classes.inactive)
             }
           >
             {link.label}

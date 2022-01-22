@@ -16,7 +16,7 @@
 18) Тэкставая падсветка што дадзеныя пайшлі на сервер
 19) Для getFilteredNotes дабавиць хук захощваць значэнне и пратэсцираваць
 20) video about bootstrap
-
+21) deploy firebase
 
 Examples of typescript:
 1)https://medium.com/@peatiscoding/typescripts-with-redux-redux-thunk-recipe-fcce4ffca405
