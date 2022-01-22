@@ -60,14 +60,11 @@ class LoginForm extends Form<DispatchProps, IFormControls> {
         this.state.formControls.password.value
       )
       .catch((error) => {
-        if (error?.message) {
-          this.setState({
-            ...this.state,
-            serverErrorMessage: error.message,
-          });
-        } else {
-          console.error("An unexpected error happened:", error);
-        }
+        this.setState({
+          ...this.state,
+          serverErrorMessage: "Something went wrong. Please try again!",
+        });
+        console.error("An unexpected error happened:", error);
       });
 
   render() {

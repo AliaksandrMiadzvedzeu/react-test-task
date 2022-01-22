@@ -34,6 +34,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
         id={htmlFor}
         value={props.value}
         onChange={props.onChange}
+        autoComplete="on"
       />
 
       {props.shouldValidate && isInvalid(props) ? (
