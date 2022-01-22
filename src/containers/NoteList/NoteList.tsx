@@ -112,7 +112,7 @@ class NoteList extends Component<Props, State> {
           <td>
             <button
               type="button"
-              className="btn btn-outline-info"
+              className={"btn " + classes.btnPrimary}
               onClick={() => this.props.removeNote(note.id)}
             >
               Remove
@@ -214,11 +214,10 @@ class NoteList extends Component<Props, State> {
             />
             <div className="input-group-append">
               <button
-                className="btn btn-warning"
+                className={"btn " + classes.btnWarning}
                 type="button"
                 id="button-addon2"
                 onClick={() => {
-                  //let new_text = this.state.newNoteText;
                   if (this.state.newNoteText.length > 0) {
                     const note: INote = {
                       id: "id" + this.props.updatedNotes.length,
@@ -239,7 +238,7 @@ class NoteList extends Component<Props, State> {
             <button
               type="button"
               onClick={this.props.saveNotes.bind(this)}
-              className={"btn btn-warning " + classes.saveButton}
+              className={"btn " + classes.btnWarning + " " + classes.saveButton}
               disabled={isEqual<INote>(
                 this.props.notes,
                 this.props.updatedNotes
