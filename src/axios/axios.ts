@@ -1,5 +1,5 @@
-import axios from 'axios'
+import axios from "axios";
 
 export default axios.create({
-  baseURL: 'https://react-quiz-13659-default-rtdb.firebaseio.com/'
-})
+  baseURL: process.env.REACT_APP_AXIOS_BASE_URL,
+});

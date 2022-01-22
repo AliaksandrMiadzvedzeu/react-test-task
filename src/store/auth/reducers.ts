@@ -33,6 +33,8 @@ const reducer: Reducer<AuthState, AuthAction> = (
       return {
         ...state,
         token: null,
+        email: "",
+        userName: "",
       };
     default:
       return state;

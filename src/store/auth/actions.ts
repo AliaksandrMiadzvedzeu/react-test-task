@@ -17,13 +17,16 @@ export function auth(
 ): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
   return async (dispatch) => {
     const isRegistration = name != null && surname != null;
+    const api_key = process.env.REACT_APP_API_KEY;
 
     let url =
-      "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDu1Vl1g7dYcb2QqAEDCzTiFegSR8xrS04";
+      "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" +
+      api_key;
 
     if (isRegistration) {
       url =
-        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDu1Vl1g7dYcb2QqAEDCzTiFegSR8xrS04";
+        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
+        api_key;
     }
 
     let idToken: string, localId: string, expiresIn: number;

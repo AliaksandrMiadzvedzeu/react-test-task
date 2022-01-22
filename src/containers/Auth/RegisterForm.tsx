@@ -99,8 +99,7 @@ class RegisterForm extends Form<DispatchProps, IFormControls> {
     return (
       <div className="d-flex justify-content-center flex-grow-1 pt-5">
         <div className="w-100 px-1" style={{ maxWidth: "600px" }}>
-          <h1 className="display-6 text-center mb-4">Create account</h1>
-          <br />
+          <h2 className="text-center mb-5">Create account</h2>
 
           <form onSubmit={this.submitHandler} className={classes.AuthForm}>
             {this.renderInputs()}

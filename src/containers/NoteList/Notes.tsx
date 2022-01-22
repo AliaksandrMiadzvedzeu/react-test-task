@@ -133,16 +133,11 @@ class Notes extends Component<Props, State> {
 
   render() {
     const completedNotesCount = this.getFilteredNotes("completed").length;
-    console.log(
-      "AAAAAAAAAAAAAAAA ",
-      this.props.loading && this.props.updatedNotes.length === 0
-    );
-    console.log("BBBBBBBBB ", this.props.updatedNotes.length);
 
     return (
       <div className="d-flex justify-content-center flex-grow-1 pt-5">
-        <div className="w-100 px-md-5" style={{ color: this.props.textColor }}>
-          <h1 className="display-6 text-center mb-4">Notes</h1>
+        <div className="w-100 px-sm-5" style={{ color: this.props.textColor }}>
+          <h2 className="text-center mb-3">Notes</h2>
 
           <div className="container d-flex justify-content-center">
             <div className="form-check mx-2">
