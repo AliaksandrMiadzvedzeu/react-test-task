@@ -6,7 +6,7 @@ import LoginForm from "./containers/Auth/LoginForm";
 import RegisterForm from "./containers/Auth/RegisterForm";
 import { autoLogin } from "./store/auth/actions";
 import { ThunkDispatch } from "redux-thunk";
-import Notes from "./containers/NoteList/Notes";
+import Notes from "./containers/Notes/Notes";
 import Logout from "./components/Logout/Logout";
 import { Navigate } from "react-router-dom";
 import { ApplicationState } from "./store";
