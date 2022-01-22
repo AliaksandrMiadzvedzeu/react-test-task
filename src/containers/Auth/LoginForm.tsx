@@ -81,7 +81,6 @@ class LoginForm extends Form<DispatchProps, IFormControls> {
             {this.renderInputs()}
 
             <Button
-              type="success"
               onClick={this.loginHandler}
               disabled={!this.state.isFormValid}
             >

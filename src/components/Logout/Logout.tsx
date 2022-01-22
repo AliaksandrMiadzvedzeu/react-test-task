@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import { Navigate } from "react-router-dom";
 import { AuthLogoutAction } from "../../store/auth/actionTypes";
 
-interface LogoutDispatchProps {
+interface DispatchProps {
   logout: () => AuthLogoutAction;
 }
 
@@ -15,13 +15,13 @@ function mapDispatchToProps(dispatch: Dispatch) {
   };
 }
 
-class Logout extends Component<LogoutDispatchProps> {
+class Logout extends Component<DispatchProps> {
   componentDidMount() {
     return this.props.logout();
   }
 
   render() {
-    return <Navigate to="/list" replace />;
+    return <Navigate to="/login" replace />;
   }
 }
 

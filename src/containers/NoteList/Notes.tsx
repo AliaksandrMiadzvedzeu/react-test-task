@@ -133,6 +133,11 @@ class Notes extends Component<Props, State> {
 
   render() {
     const completedNotesCount = this.getFilteredNotes("completed").length;
+    console.log(
+      "AAAAAAAAAAAAAAAA ",
+      this.props.loading && this.props.updatedNotes.length === 0
+    );
+    console.log("BBBBBBBBB ", this.props.updatedNotes.length);
 
     return (
       <div className="d-flex justify-content-center flex-grow-1 pt-5">
@@ -184,7 +189,8 @@ class Notes extends Component<Props, State> {
           </div>
 
           <br />
-          {this.props.loading && this.props.updatedNotes.length !== 0 ? (
+
+          {this.props.loading ? (
             <Loader />
           ) : (
             <table className="table table-striped">

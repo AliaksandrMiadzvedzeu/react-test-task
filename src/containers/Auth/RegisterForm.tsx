@@ -112,7 +112,6 @@ class RegisterForm extends Form<DispatchProps, IFormControls> {
           <form onSubmit={this.submitHandler} className={classes.AuthForm}>
             {this.renderInputs()}
             <Button
-              type="primary"
               onClick={this.registerHandler}
               disabled={!this.state.isFormValid}
             >

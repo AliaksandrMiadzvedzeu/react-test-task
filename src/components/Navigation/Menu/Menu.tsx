@@ -7,12 +7,12 @@ interface ILink {
   label: string;
 }
 
-interface MenuProps {
+interface OwnProps {
   isAuthenticated: boolean;
   userName: string;
 }
 
-class Menu extends Component<MenuProps> {
+class Menu extends Component<OwnProps> {
   renderLinks(links: Array<ILink>) {
     return links.map((link, index) => {
       return (
@@ -42,13 +42,13 @@ class Menu extends Component<MenuProps> {
     }
 
     return (
-      <div className={"d-flex justify-content-between " + classes.wrapper}>
+      <div className={"d-flex justify-content-between " + classes.menuPanel}>
         <div className="d-flex align-items-center px-3">
           {this.props.isAuthenticated && this.props.userName.length > 0
             ? `Hello ${this.props.userName}`
             : null}
         </div>
-        <ul className={"nav nav-pills justify-content-end " + classes.navPills}>
+        <ul className={"nav nav-pills justify-content-end"}>
           {this.renderLinks(links)}
         </ul>
       </div>

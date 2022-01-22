@@ -37,7 +37,7 @@ const Input: FunctionComponent<IInputProps> = (props) => {
       />
 
       {isInvalid(props) ? (
-        <span>{props.errorMessage || "Введите верное значение"}</span>
+        <span>{props.errorMessage || "Please enter a valid value"}</span>
       ) : null}
     </div>
   );
