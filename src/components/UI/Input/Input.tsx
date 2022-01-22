@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
 import classes from "./Input.module.css";
 
-function isInvalid({ valid, touched, shouldValidate }: Partial<IInputProps>) {
+function isInvalid({ valid, touched, shouldValidate }: Partial<OwnProps>) {
   return !valid && shouldValidate && touched;
 }
 
-interface IInputProps {
+interface OwnProps {
   key: string;
   type: string;
   value: string;
@@ -17,7 +17,7 @@ interface IInputProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: FunctionComponent<IInputProps> = (props) => {
+const Input: FunctionComponent<OwnProps> = (props) => {
   const inputType = props.type || "text";
   const cls = [classes.Input];
   const htmlFor = `${inputType}-${Math.random()}`;
