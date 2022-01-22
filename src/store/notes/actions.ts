@@ -1,4 +1,4 @@
-import axios_user from "../../axios/axios-user";
+import axios_user from "../../axios/axios";
 import {
   FETCH_NOTES_START,
   FETCH_NOTES_SUCCESS,

@@ -1,5 +1,4 @@
-import axios_auth from "axios";
-import axios_user from "../../axios/axios-user";
+import axios from "../../axios/axios";
 import {
   AUTH_LOGOUT,
   AUTH_SUCCESS,
@@ -29,7 +28,7 @@ export function auth(
 
     let idToken: string, localId: string, expiresIn: number;
 
-    return await axios_auth
+    return await axios
       .post(url, { email, password, returnSecureToken: true })
       .then((response) => {
         idToken = response.data?.idToken;
@@ -37,12 +36,12 @@ export function auth(
         expiresIn = response.data?.expiresIn;
 
         if (isRegistration) {
-          return axios_user.put(`/users/${email.replace(".", "^")}.json`, {
+          return axios.put(`/users/${email.replace(".", "^")}.json`, {
             name: name,
             surname: surname,
           });
         } else {
-          return axios_user.get(`/users/${email.replace(".", "^")}.json`);
+          return axios.get(`/users/${email.replace(".", "^")}.json`);
         }
       })
       .then((response) => {
