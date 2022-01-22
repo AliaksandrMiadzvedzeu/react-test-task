@@ -45,9 +45,10 @@ export function fetchNotes(): ThunkAction<
       );
 
       const notes: Array<INote> = [];
-      for (const [key, value] of Object.entries(response.data)) {
+      let counter: number = 0;
+      for (const value of Object.values(response.data)) {
         notes.push({
-          id: key,
+          id: "id" + counter++,
           text: (value as INote).text,
           done: (value as INote).done,
         });

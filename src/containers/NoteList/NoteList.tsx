@@ -130,9 +130,7 @@ class NoteList extends Component<Props, State> {
     return (
       <div className="d-flex justify-content-center flex-grow-1 pt-5">
         <div className="w-100 px-md-5" style={{ color: this.props.textColor }}>
-          <h1 className="display-6 text-center">Notes</h1>
-
-          <br />
+          <h1 className="display-6 text-center mb-4">Notes</h1>
 
           <div className="container d-flex justify-content-center">
             <div className="form-check mx-2">
@@ -220,7 +218,7 @@ class NoteList extends Component<Props, State> {
                 onClick={() => {
                   if (this.state.newNoteText.length > 0) {
                     const note: INote = {
-                      id: "id" + this.props.notes + this.noteCounter,
+                      id: "id" + (this.props.notes.length + this.noteCounter),
                       text: this.state.newNoteText,
                       done: false,
                     };
