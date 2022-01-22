@@ -10,10 +10,10 @@ export interface IFormControl {
   value: string;
   type: string;
   label: string;
-  errorMessage: string;
-  valid: boolean;
-  touched: boolean;
-  validation: IValidation;
+  errorMessage?: string;
+  valid?: boolean;
+  touched?: boolean;
+  validation?: IValidation;
 }
 
 export interface IValidation {

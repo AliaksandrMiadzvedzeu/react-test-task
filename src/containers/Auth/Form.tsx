@@ -1,8 +1,7 @@
 import { IFormControl, IFormControls, IValidation } from "./IFormControl";
-
 import is from "is_js";
 import React, { Component } from "react";
-import Input from "../../components/UI/Input/Input";
+import Input, { InputProps } from "../../components/UI/Input/Input";
 
 export class Form<T, P extends IFormControls> extends Component<T, P> {
   submitHandler = (event: React.FormEvent) => {
@@ -42,15 +41,21 @@ export class Form<T, P extends IFormControls> extends Component<T, P> {
     const control: IFormControl = { ...formControls[controlName] };
 
     control.value = event.target.value;
-    control.touched = true;
-    control.valid = this.validateControl(control.value, control.validation);
+
+    if (control.validation) {
+      control.touched = true;
+      control.valid = this.validateControl(control.value, control.validation);
+    }
 
     formControls[controlName] = control;
 
     let isFormValid = true;
 
     Object.keys(formControls).forEach((name) => {
-      isFormValid = formControls[name].valid && isFormValid;
+      const valid = formControls[name].valid;
+      if (valid != null) {
+        isFormValid = valid && isFormValid;
+      }
     });
 
     this.setState({
@@ -65,21 +70,24 @@ export class Form<T, P extends IFormControls> extends Component<T, P> {
       this.state.formControls;
     return Object.keys(formControls).map((controlName, index) => {
       const control: IFormControl = formControls[controlName];
-      return (
-        <Input
-          key={controlName + index}
-          type={control.type}
-          value={control.value}
-          valid={control.valid}
-          touched={control.touched}
-          label={control.label}
-          shouldValidate={!!control.validation}
-          errorMessage={control.errorMessage}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            this.onChangeHandler(event, controlName)
-          }
-        />
-      );
+
+      const attributes: InputProps = {
+        key: controlName + index,
+        type: control.type,
+        value: control.value,
+        label: control.label,
+        shouldValidate: !!control.validation,
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+          this.onChangeHandler(event, controlName),
+      };
+
+      if (control.validation) {
+        attributes.valid = control.valid;
+        attributes.touched = control.touched;
+        attributes.errorMessage = control.errorMessage;
+      }
+
+      return <Input {...attributes} />;
     });
   }
 }

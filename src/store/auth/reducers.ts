@@ -8,15 +8,13 @@ export interface State {
 export interface AuthState {
   token: string | null;
   email: string;
-  name: string;
-  surname: string;
+  userName: string;
 }
 
 const initialState: AuthState = {
   token: null,
   email: "",
-  name: "",
-  surname: "",
+  userName: "",
 };
 
 const reducer: Reducer<AuthState, AuthAction> = (
@@ -29,8 +27,7 @@ const reducer: Reducer<AuthState, AuthAction> = (
         ...state,
         token: action.token,
         email: action.email,
-        name: action.name,
-        surname: action.surname,
+        userName: action.userName,
       };
     case AUTH_LOGOUT:
       return {
@@ -43,7 +40,3 @@ const reducer: Reducer<AuthState, AuthAction> = (
 };
 
 export default reducer;
-
-// export default combineReducers<State>({
-//   reducer,
-// });

@@ -1,28 +1,28 @@
 import React, { FunctionComponent } from "react";
 import classes from "./Input.module.css";
 
-function isInvalid({ valid, touched, shouldValidate }: Partial<OwnProps>) {
+function isInvalid({ valid, touched, shouldValidate }: Partial<InputProps>) {
   return !valid && shouldValidate && touched;
 }
 
-interface OwnProps {
+export interface InputProps {
   key: string;
   type: string;
   value: string;
-  valid: boolean;
-  touched: boolean;
   label: string;
   shouldValidate: boolean;
-  errorMessage: string;
+  valid?: boolean;
+  touched?: boolean;
+  errorMessage?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: FunctionComponent<OwnProps> = (props) => {
+const Input: FunctionComponent<InputProps> = (props) => {
   const inputType = props.type || "text";
   const cls = [classes.Input];
   const htmlFor = `${inputType}-${Math.random()}`;
 
-  if (isInvalid(props)) {
+  if (props.shouldValidate && isInvalid(props)) {
     cls.push(classes.invalid);
   }
 
@@ -36,7 +36,7 @@ const Input: FunctionComponent<OwnProps> = (props) => {
         onChange={props.onChange}
       />
 
-      {isInvalid(props) ? (
+      {props.shouldValidate && isInvalid(props) ? (
         <span>{props.errorMessage || "Please enter a valid value"}</span>
       ) : null}
     </div>

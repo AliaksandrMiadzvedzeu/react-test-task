@@ -72,13 +72,6 @@ class RegisterForm extends Form<DispatchProps, IFormControls> {
         value: "",
         type: "input",
         label: "Surname",
-        errorMessage: "Please enter your surname",
-        valid: false,
-        touched: false,
-        validation: {
-          required: true,
-          minLength: 2,
-        },
       },
     },
   };

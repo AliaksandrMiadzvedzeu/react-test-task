@@ -6,8 +6,7 @@ import Menu from "../../components/Navigation/Menu/Menu";
 
 interface StateProps {
   isAuthenticated: boolean;
-  name?: string;
-  surname?: string;
+  userName: string;
 }
 
 interface OwnProps {
@@ -17,22 +16,17 @@ interface OwnProps {
 function mapStateToProps(state: ApplicationState): StateProps {
   return {
     isAuthenticated: !!state.auth.token,
-    name: state.auth.name,
-    surname: state.auth.surname,
+    userName: state.auth.userName,
   };
 }
 
 class Layout extends Component<StateProps & OwnProps> {
   render() {
-    let userName = this.props.name ? this.props.name : "";
-    if (userName.length > 0 && this.props.surname) userName += " ";
-    if (this.props.surname) userName += this.props.surname;
-
     return (
       <div className={classes.Layout}>
         <Menu
           isAuthenticated={this.props.isAuthenticated}
-          userName={userName}
+          userName={this.props.userName}
         />
         <main>{this.props.children}</main>
       </div>
