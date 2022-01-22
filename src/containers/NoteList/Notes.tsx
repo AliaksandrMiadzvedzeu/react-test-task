@@ -68,7 +68,8 @@ function mapDispatchToProps(
 }
 
 class Notes extends Component<Props, State> {
-  noteCounter: number = 0;
+  noteCounter: number = 0; //This counter uses to make unique id when we are creating new note.
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -76,7 +77,7 @@ class Notes extends Component<Props, State> {
     };
   }
 
-  getFilteredNotes(filter: string): Array<INote> {
+  getFilteredNotes = (filter: string): Array<INote> => {
     return this.props.updatedNotes.filter((value) => {
       if (filter === FilterTypes.COMPLETED) {
         return value.done;
@@ -85,7 +86,18 @@ class Notes extends Component<Props, State> {
       }
       return true;
     });
-  }
+  };
+
+  onAddNoteHandler = () => {
+    const note: INote = {
+      id: "id" + (this.props.notes.length + this.noteCounter),
+      text: this.state.newNoteText,
+      done: false,
+    };
+    this.props.addNote(note);
+    this.setState({ newNoteText: "" });
+    this.noteCounter++;
+  };
 
   componentDidMount() {
     this.props.fetchNotes();
@@ -154,7 +166,10 @@ class Notes extends Component<Props, State> {
                 type="radio"
                 name="flexRadioDefault"
                 id="flexRadioDefault2"
-                onChange={this.props.setFilter.bind(this, FilterTypes.COMPLETED)}
+                onChange={this.props.setFilter.bind(
+                  this,
+                  FilterTypes.COMPLETED
+                )}
                 checked={this.props.filter === FilterTypes.COMPLETED}
               />
               <label className="form-check-label" htmlFor="flexRadioDefault2">
@@ -217,18 +232,8 @@ class Notes extends Component<Props, State> {
                 className={"btn " + classes.btnWarning}
                 type="button"
                 id="button-addon2"
-                onClick={() => {
-                  if (this.state.newNoteText.length > 0) {
-                    const note: INote = {
-                      id: "id" + (this.props.notes.length + this.noteCounter),
-                      text: this.state.newNoteText,
-                      done: false,
-                    };
-                    this.props.addNote(note);
-                    this.setState({ newNoteText: "" });
-                    this.noteCounter++;
-                  }
-                }}
+                onClick={this.onAddNoteHandler}
+                disabled={this.state.newNoteText.trim().length === 0}
               >
                 Add note
               </button>
