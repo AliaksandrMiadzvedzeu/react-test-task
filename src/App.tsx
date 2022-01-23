@@ -53,7 +53,7 @@ class App extends Component<DispatchProps & StateProps, {}> {
     if (this.props.isAuthenticated) {
       routes = (
         <Routes>
-          <Route path="list" element={<Notes textColor="black" />} />
+          <Route path="list" element={<Notes />} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<Navigate to="/list" />} />
         </Routes>

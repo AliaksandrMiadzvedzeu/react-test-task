@@ -4,9 +4,7 @@ import { AnyAction } from "redux";
 import classes from "./Notes.module.css";
 import {
   addNote,
-  changeNote,
   fetchNotes,
-  removeNote,
   saveNotes,
   setFilter,
 } from "../../store/notes/actions";
@@ -16,22 +14,17 @@ import { ApplicationState } from "../../store";
 import { INote } from "../../store/notes/reducers";
 import { isEqual } from "../../lib/isEqual";
 import { FilterTypes } from "./FilterTypes";
+import NoteTable from "./NoteTable";
 
 interface State {
   newNoteText: string;
 }
 
-interface OwnProps {
-  textColor: string;
-}
-
 interface DispatchProps {
   fetchNotes: () => void;
   saveNotes: () => void;
-  changeNote: (id: string) => void;
   addNote: (note: INote) => void;
   setFilter: (filter: string) => void;
-  removeNote: (id: string) => void;
 }
 
 interface StateProps {
@@ -42,7 +35,7 @@ interface StateProps {
   filter: string;
 }
 
-type Props = StateProps & DispatchProps & OwnProps;
+type Props = StateProps & DispatchProps;
 
 function mapStateToProps(state: ApplicationState): StateProps {
   return {
@@ -60,10 +53,8 @@ function mapDispatchToProps(
   return {
     fetchNotes: () => dispatch(fetchNotes()),
     saveNotes: () => dispatch(saveNotes()),
-    changeNote: (id: string) => dispatch(changeNote(id)),
     addNote: (note: INote) => dispatch(addNote(note)),
     setFilter: (filter: string) => dispatch(setFilter(filter)),
-    removeNote: (id: string) => dispatch(removeNote(id)),
   };
 }
 
@@ -103,46 +94,12 @@ class Notes extends Component<Props, State> {
     this.props.fetchNotes();
   }
 
-  renderNotes() {
-    return this.getFilteredNotes(this.props.filter).map((note, index) => {
-      return (
-        <tr key={note.id}>
-          <td>{note.text}</td>
-          <td>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckChecked"
-                checked={!note.done}
-                onChange={() => this.props.changeNote(note.id)}
-              />
-              <label className="form-check-label" htmlFor="flexCheckChecked">
-                {note.done ? FilterTypes.COMPLETED : FilterTypes.WAITING}
-              </label>
-            </div>
-          </td>
-          <td>
-            <button
-              type="button"
-              className={"btn " + classes.btnPrimary}
-              onClick={() => this.props.removeNote(note.id)}
-            >
-              Remove
-            </button>
-          </td>
-        </tr>
-      );
-    });
-  }
-
   render() {
     const completedNotesCount = this.getFilteredNotes("completed").length;
 
     return (
       <div className="d-flex justify-content-center flex-grow-1 pt-5">
-        <div className="w-100 px-sm-5" style={{ color: this.props.textColor }}>
+        <div className="w-100 px-sm-5">
           <h2 className="text-center mb-3">Notes</h2>
 
           <div className="container d-flex justify-content-center">
@@ -197,22 +154,7 @@ class Notes extends Component<Props, State> {
           {this.props.loading ? (
             <Loader />
           ) : (
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th style={{ width: "80%" }} scope="col">
-                    Note
-                  </th>
-                  <th style={{ width: "10%" }} scope="col">
-                    Status
-                  </th>
-                  <th style={{ width: "10%" }} scope="col">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>{this.renderNotes()}</tbody>
-            </table>
+            <NoteTable getFilteredNotes={this.getFilteredNotes} />
           )}
 
           <br />
@@ -245,10 +187,7 @@ class Notes extends Component<Props, State> {
               type="button"
               onClick={this.props.saveNotes.bind(this)}
               className={"btn " + classes.btnWarning + " " + classes.saveButton}
-              disabled={isEqual<INote>(
-                this.props.notes,
-                this.props.updatedNotes
-              )}
+              disabled={isEqual(this.props.notes, this.props.updatedNotes)}
             >
               Save notes
             </button>

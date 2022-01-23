@@ -53,8 +53,8 @@ export const reducer: Reducer<NoteState, NoteAction> = (
       return {
         ...state,
         loading: false,
-        notes: action.notes || [],
-        updatedNotes: action.notes || [],
+        notes: [...action.notes],
+        updatedNotes: [...action.notes],
         filter: "all",
       };
     case FETCH_NOTES_ERROR:

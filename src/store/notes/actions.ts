@@ -99,10 +99,17 @@ export function changeNote(
     getState
   ): void => {
     const { updatedNotes } = getState().note;
-    for (const item of updatedNotes) {
+    updatedNotes.forEach((item, index) => {
       if (item.id === id) {
-        item.done = !item.done;
+        updatedNotes[index] = {
+          id: item.id,
+          text: item.text,
+          done: !item.done,
+        };
       }
+    });
+
+    for (const item of updatedNotes) {
     }
     dispatch({
       type: CHANGE_NOTE,
