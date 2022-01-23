@@ -19,7 +19,6 @@ import {
 } from "./actionTypes";
 
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
 import { ApplicationState } from "../index";
 import { INote } from "./reducers";
 import { encodeEmail } from "../../lib/encodeEmail";
@@ -77,7 +76,7 @@ export function saveNotes(): ThunkAction<
       const data: any = {};
       let counter = 0;
       for (const item of updatedNotes) {
-        item.id = "id" + counter;
+        item.id = "id" + counter; //update old item because new item can have a bug with id
         data[item.id] = { text: item.text, done: item.done };
         counter++;
       }

@@ -170,7 +170,7 @@ class Notes extends Component<Props, State> {
               placeholder="Text of note"
               aria-label="Text of note"
               aria-describedby="button-addon2"
-              maxLength={100}
+              maxLength={200}
               value={this.state.newNoteText}
               onChange={(e) => this.setState({ newNoteText: e.target.value })}
             />

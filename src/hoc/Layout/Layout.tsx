@@ -1,5 +1,4 @@
 import React, { Component, ReactChild, ReactChildren } from "react";
-import classes from "./Layout.module.css";
 import { connect } from "react-redux";
 import { ApplicationState } from "../../store";
 import Menu from "../../components/Navigation/Menu/Menu";
@@ -23,13 +22,13 @@ function mapStateToProps(state: ApplicationState): StateProps {
 class Layout extends Component<StateProps & OwnProps> {
   render() {
     return (
-      <div className={classes.Layout}>
+      <>
         <Menu
           isAuthenticated={this.props.isAuthenticated}
           userName={this.props.userName}
         />
         <main>{this.props.children}</main>
-      </div>
+      </>
     );
   }
 }
