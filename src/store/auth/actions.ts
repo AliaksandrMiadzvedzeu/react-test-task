@@ -18,7 +18,7 @@ export function auth(
 ): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
   return async (dispatch) => {
     const isRegistration = name != null;
-    const api_key = process.env.REACT_APP_API_KEY;
+    const api_key = process.env.API_KEY;
 
     let url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${api_key}`;
 

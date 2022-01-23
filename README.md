@@ -1,14 +1,16 @@
 # React-Redux-Thunk Example
 
-The project shows how to use [Redux-Thunk](https://github.com/reduxjs/redux-thunk) along with [TypeScript](https://www.typescriptlang.org/) language.
+The package shows how to use [Redux-Thunk](https://github.com/reduxjs/redux-thunk) along with [TypeScript](https://www.typescriptlang.org/) language.
+I also use bootstrap and webpack in this example.
 
-To run the project.
+To run the package.
 
 ```
 git clone https://github.com/aliaksandrminsk/react-redux-bootstrap-task.git
 cd react-redux-bootstrap-task
-yarn
-yarn start
+npm install
+npm run start
 ```
 
-Please note that this project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[React-Redux-Thunk Example
+](https://react-redux-bootstrap-task.web.app/)
