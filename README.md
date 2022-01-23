@@ -1,4 +1,4 @@
-# Redux-Redux-Thunk Example
+# React-Redux-Thunk Example
 
 The project shows how to use [Redux-Thunk](https://github.com/reduxjs/redux-thunk) along with [TypeScript](https://www.typescriptlang.org/) language.
 
