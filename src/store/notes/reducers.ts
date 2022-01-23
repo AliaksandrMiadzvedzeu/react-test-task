@@ -2,16 +2,15 @@ import {
   FETCH_NOTES_START,
   FETCH_NOTES_SUCCESS,
   FETCH_NOTES_ERROR,
-  SAVE_NOTES_START,
   SAVE_NOTES_SUCCESS,
   SAVE_NOTES_ERROR,
   CHANGE_NOTE,
   SET_FILTER,
   ADD_NOTE,
   REMOVE_NOTE,
+  NoteAction,
 } from "./actionTypes";
 import { Reducer } from "redux";
-import { NoteAction } from "./actions";
 
 export interface State {
   reducer: NoteState;
@@ -27,7 +26,7 @@ export interface NoteState {
   notes: Array<INote>;
   updatedNotes: Array<INote>;
   loading: boolean;
-  message: string;
+  errorMessage: string;
   filter: string;
 }
 
@@ -35,7 +34,7 @@ const initialState: NoteState = {
   notes: new Array<INote>(),
   updatedNotes: new Array<INote>(),
   loading: false,
-  message: "",
+  errorMessage: "",
   filter: "all",
 };
 
@@ -53,6 +52,7 @@ export const reducer: Reducer<NoteState, NoteAction> = (
       return {
         ...state,
         loading: false,
+        errorMessage: "",
         notes: [...action.notes],
         updatedNotes: [...action.notes],
         filter: "all",
@@ -61,43 +61,42 @@ export const reducer: Reducer<NoteState, NoteAction> = (
       return {
         ...state,
         loading: false,
-        message: action.message || "",
+        errorMessage: action.errorMessage,
       };
 
-    case SAVE_NOTES_START:
-      return {
-        ...state,
-        message: action.message || "",
-      };
     case SAVE_NOTES_SUCCESS:
       return {
         ...state,
         notes: [...action.updatedNotes],
-        message: "",
+        errorMessage: "",
       };
     case SAVE_NOTES_ERROR:
       return {
         ...state,
-        message: action.message || "",
+        errorMessage: action.errorMessage,
       };
     case CHANGE_NOTE:
       return {
         ...state,
+        errorMessage: "",
         updatedNotes: [...action.updatedNotes],
       };
     case ADD_NOTE:
       return {
         ...state,
+        errorMessage: "",
         updatedNotes: [...state.updatedNotes, action.note],
       };
     case SET_FILTER:
       return {
         ...state,
+        errorMessage: "",
         filter: action.filter,
       };
     case REMOVE_NOTE:
       return {
         ...state,
+        errorMessage: "",
         updatedNotes: [...action.updatedNotes],
       };
     default:

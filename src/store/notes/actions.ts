@@ -3,29 +3,26 @@ import {
   FETCH_NOTES_START,
   FETCH_NOTES_SUCCESS,
   FETCH_NOTES_ERROR,
-  SAVE_NOTES_START,
   SAVE_NOTES_SUCCESS,
   SAVE_NOTES_ERROR,
   CHANGE_NOTE,
   SET_FILTER,
   ADD_NOTE,
+  REMOVE_NOTE,
   FetchNotesStartAction,
   FetchNotesSuccessAction,
   FetchNotesErrorAction,
-  SaveNotesStartAction,
   SaveNotesSuccessAction,
   SaveNotesErrorAction,
-  ChangeNoteAction,
-  AddNoteAction,
   SetFilterAction,
-  REMOVE_NOTE,
-  RemoveNoteAction,
+  NoteAction,
 } from "./actionTypes";
 
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import { ApplicationState } from "../index";
 import { INote } from "./reducers";
+import { encodeEmail } from "../../lib/encodeEmail";
 
 export function fetchNotes(): ThunkAction<
   Promise<void>,
@@ -41,7 +38,7 @@ export function fetchNotes(): ThunkAction<
     dispatch(fetchNotesStart());
     try {
       const response = await axios_user.get(
-        `/users/${email.replace(".", "^")}/data.json`
+        `/users/${encodeEmail(email)}/data.json`
       );
 
       const notes: Array<INote> = [];
@@ -54,8 +51,11 @@ export function fetchNotes(): ThunkAction<
         });
       }
       dispatch(fetchNotesSuccess(notes));
-    } catch (e) {
-      dispatch(fetchNotesError((e as Error).toString()));
+    } catch (error) {
+      dispatch(
+        fetchNotesError("Error occurred. It appears something is broken.")
+      );
+      console.error("An unexpected error happened:", error);
     }
   };
 }
@@ -73,20 +73,17 @@ export function saveNotes(): ThunkAction<
     const { email } = getState().auth;
     const { updatedNotes } = getState().note;
 
-    dispatch(saveNotesStart("Saving data..."));
     try {
       const data: any = {};
       for (const item of updatedNotes) {
         data[item.id] = { text: item.text, done: item.done };
       }
-      await axios_user.put(
-        `/users/${email.replace(".", "^")}/data.json/`,
-        data
-      );
+      await axios_user.put(`/users/${encodeEmail(email)}/data.json/`, data);
 
       dispatch(saveNotesSuccess(updatedNotes));
-    } catch (e) {
-      dispatch(saveNotesError((e as Error).toString()));
+    } catch (error) {
+      dispatch(saveNotesError("Something went wrong. Try again!"));
+      console.error("An unexpected error happened:", error);
     }
   };
 }
@@ -109,8 +106,6 @@ export function changeNote(
       }
     });
 
-    for (const item of updatedNotes) {
-    }
     dispatch({
       type: CHANGE_NOTE,
       updatedNotes,
@@ -173,17 +168,10 @@ export function fetchNotesSuccess(
   };
 }
 
-export function fetchNotesError(e: string): FetchNotesErrorAction {
+export function fetchNotesError(errorMessage: string): FetchNotesErrorAction {
   return {
     type: FETCH_NOTES_ERROR,
-    message: e,
-  };
-}
-
-export function saveNotesStart(message: string): SaveNotesStartAction {
-  return {
-    type: SAVE_NOTES_START,
-    message,
+    errorMessage,
   };
 }
 
@@ -196,21 +184,9 @@ export function saveNotesSuccess(
   };
 }
 
-export function saveNotesError(message: string): SaveNotesErrorAction {
+export function saveNotesError(errorMessage: string): SaveNotesErrorAction {
   return {
     type: SAVE_NOTES_ERROR,
-    message,
+    errorMessage,
   };
 }
-
-export type NoteAction =
-  | FetchNotesStartAction
-  | FetchNotesSuccessAction
-  | FetchNotesErrorAction
-  | SaveNotesStartAction
-  | SaveNotesSuccessAction
-  | SaveNotesErrorAction
-  | ChangeNoteAction
-  | AddNoteAction
-  | SetFilterAction
-  | RemoveNoteAction;

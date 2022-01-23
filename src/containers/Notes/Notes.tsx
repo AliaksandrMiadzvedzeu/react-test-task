@@ -31,7 +31,7 @@ interface StateProps {
   notes: Array<INote>;
   updatedNotes: Array<INote>;
   loading: boolean;
-  message: string;
+  errorMessage: string;
   filter: string;
 }
 
@@ -42,7 +42,7 @@ function mapStateToProps(state: ApplicationState): StateProps {
     notes: state.note.notes,
     updatedNotes: state.note.updatedNotes,
     loading: state.note.loading,
-    message: state.note.message,
+    errorMessage: state.note.errorMessage,
     filter: state.note.filter,
   };
 }
@@ -107,12 +107,12 @@ class Notes extends Component<Props, State> {
               <input
                 className="form-check-input"
                 type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
+                name="filterRadio"
+                id="filterRadio1"
                 onChange={this.props.setFilter.bind(this, FilterTypes.All)}
                 checked={this.props.filter === FilterTypes.All}
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault1">
+              <label className="form-check-label" htmlFor="filterRadio1">
                 All ({this.props.updatedNotes.length})
               </label>
             </div>
@@ -121,15 +121,15 @@ class Notes extends Component<Props, State> {
               <input
                 className="form-check-input"
                 type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
+                name="filterRadio"
+                id="filterRadio2"
                 onChange={this.props.setFilter.bind(
                   this,
                   FilterTypes.COMPLETED
                 )}
                 checked={this.props.filter === FilterTypes.COMPLETED}
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
+              <label className="form-check-label" htmlFor="filterRadio2">
                 Completed ({completedNotesCount})
               </label>
             </div>
@@ -138,18 +138,23 @@ class Notes extends Component<Props, State> {
               <input
                 className="form-check-input"
                 type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault3"
+                name="filterRadio"
+                id="filterRadio3"
                 onChange={this.props.setFilter.bind(this, FilterTypes.WAITING)}
                 checked={this.props.filter === FilterTypes.WAITING}
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault3">
+              <label className="form-check-label" htmlFor="filterRadio3">
                 Waiting ({this.props.updatedNotes.length - completedNotesCount})
               </label>
             </div>
           </div>
 
           <br />
+          {this.props.errorMessage ? (
+            <h4 className="text-danger d-flex justify-content-center mb-4">
+              {this.props.errorMessage}
+            </h4>
+          ) : null}
 
           {this.props.loading ? (
             <Loader />
@@ -192,7 +197,6 @@ class Notes extends Component<Props, State> {
               Save notes
             </button>
           </div>
-          <br />
           <br />
         </div>
       </div>

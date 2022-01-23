@@ -82,7 +82,7 @@ class NoteTable extends Component<Props> {
             <th style={{ width: "80%" }} scope="col">
               Note
             </th>
-            <th style={{ width: "10%" }} scope="col">
+            <th style={{ width: "110px" }} scope="col">
               Status
             </th>
             <th style={{ width: "10%" }} scope="col">
