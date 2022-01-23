@@ -28,10 +28,10 @@ export function fetchNotes(): ThunkAction<
   Promise<void>,
   ApplicationState,
   {},
-  AnyAction
+  NoteAction
 > {
   return async (
-    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
     getState
   ): Promise<void> => {
     const { email } = getState().auth;
@@ -64,10 +64,10 @@ export function saveNotes(): ThunkAction<
   Promise<void>,
   ApplicationState,
   {},
-  AnyAction
+  NoteAction
 > {
   return async (
-    dispatch: ThunkDispatch<{}, {}, NoteAction>,
+    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
     getState
   ): Promise<void> => {
     const { email } = getState().auth;
@@ -93,9 +93,9 @@ export function saveNotes(): ThunkAction<
 
 export function changeNote(
   id: string
-): ThunkAction<void, ApplicationState, {}, AnyAction> {
+): ThunkAction<void, ApplicationState, {}, NoteAction> {
   return (
-    dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>,
+    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
     getState
   ): void => {
     const { updatedNotes } = getState().note;
@@ -118,8 +118,8 @@ export function changeNote(
 
 export function addNote(
   note: INote
-): ThunkAction<void, ApplicationState, {}, AnyAction> {
-  return (dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>): void => {
+): ThunkAction<void, ApplicationState, {}, NoteAction> {
+  return (dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>): void => {
     dispatch({
       type: ADD_NOTE,
       note,
@@ -136,9 +136,9 @@ export function setFilter(filter: string): SetFilterAction {
 
 export function removeNote(
   id: string
-): ThunkAction<void, ApplicationState, {}, AnyAction> {
+): ThunkAction<void, ApplicationState, {}, NoteAction> {
   return (
-    dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>,
+    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
     getState
   ): void => {
     const { updatedNotes } = getState().note;

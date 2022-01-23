@@ -44,7 +44,9 @@ class NoteTable extends Component<Props> {
     return this.props.getFilteredNotes(this.props.filter).map((note, index) => {
       return (
         <tr key={"note-" + note.id}>
-          <td>{note.text}</td>
+          <td>
+            <span style={{ wordBreak: "break-word" }}>{note.text} </span>
+          </td>
           <td>
             <div className="form-check">
               <input
