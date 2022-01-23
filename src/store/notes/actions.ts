@@ -42,12 +42,14 @@ export function fetchNotes(): ThunkAction<
 
       const notes: Array<INote> = [];
       let counter: number = 0;
-      for (const value of Object.values(response.data)) {
-        notes.push({
-          id: "id" + counter++,
-          text: (value as INote).text,
-          done: (value as INote).done,
-        });
+      if (response.data != null) {
+        for (const value of Object.values(response.data)) {
+          notes.push({
+            id: "id" + counter++,
+            text: (value as INote).text,
+            done: (value as INote).done,
+          });
+        }
       }
       dispatch(fetchNotesSuccess(notes));
     } catch (error) {
