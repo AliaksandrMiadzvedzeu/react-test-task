@@ -43,14 +43,14 @@
 .btnWarning:hover {
     color: yellow;
     background-color: rgb(0, 153, 204);
-    border-color: #d39e00;
+    border-color: black;
 }
 
 .btnWarning:focus, .btnWarning.focus {
     color: white;
     background-color: rgb(0, 153, 204);
-    border-color: #d39e00;
-    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+    border-color: black;
+    box-shadow: 0 0 0 0.1rem rgba(0, 153, 204, 0.9);
 }
 
 .btnWarning.disabled, .btnWarning:disabled {
@@ -63,10 +63,10 @@
 .show > .btnWarning.dropdown-toggle {
     color: white;
     background-color: rgb(0, 153, 204);
-    border-color: #c69500;
+    border-color: rgb(8, 5, 15);
 }
 
 .btnWarning:not(:disabled):not(.disabled):active:focus, .btnWarning:not(:disabled):not(.disabled).active:focus,
 .show > .btnWarning.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+    box-shadow: 0 0 0 0.1rem rgb(2, 7, 6);
 }

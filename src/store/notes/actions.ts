@@ -1,4 +1,4 @@
-import axios_user from "../../axios/axios";
+import axios from "../../axios/axios";
 import {
   FETCH_NOTES_START,
   FETCH_NOTES_SUCCESS,
@@ -37,7 +37,7 @@ export function fetchNotes(): ThunkAction<
     const { email } = getState().auth;
     dispatch(fetchNotesStart());
     try {
-      const response = await axios_user.get(
+      const response = await axios.get(
         `/users/${encodeEmail(email)}/data.json`
       );
 
@@ -75,10 +75,13 @@ export function saveNotes(): ThunkAction<
 
     try {
       const data: any = {};
+      let counter = 0;
       for (const item of updatedNotes) {
+        item.id = "id" + counter;
         data[item.id] = { text: item.text, done: item.done };
+        counter++;
       }
-      await axios_user.put(`/users/${encodeEmail(email)}/data.json/`, data);
+      await axios.put(`/users/${encodeEmail(email)}/data.json/`, data);
 
       dispatch(saveNotesSuccess(updatedNotes));
     } catch (error) {
