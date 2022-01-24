@@ -3,12 +3,12 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const Dotenv = require("dotenv-webpack");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
@@ -21,14 +21,15 @@ const optimization = () => {
   };
   if (isProd) {
     config.minimizer = [
-      new OptimizeCssAssetsWebpackPlugin(),
+      new CssMinimizerPlugin(),
       new TerserWebpackPlugin({ extractComments: false }),
     ];
   }
   return config;
 };
 
-const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+const filename = (ext) =>
+  isDev ? `[name].${ext}` : `[name].[fullhash].${ext}`;
 
 const babelOptions = () => {
   return {
@@ -67,7 +68,11 @@ const plugins = () => {
   ];
 
   if (isProd) {
-    base.push(new BundleAnalyzerPlugin());
+    base.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: process.env.STATS || "disabled",
+      })
+    );
   }
   return base;
 };
