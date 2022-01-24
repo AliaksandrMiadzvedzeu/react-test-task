@@ -89,7 +89,7 @@ module.exports = {
     publicPath: "/",
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx", ".json", ".png"],
+    extensions: [".js", ".ts", ".tsx", ".json"],
   },
   optimization: optimization(),
   devServer: {
@@ -114,10 +114,6 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.(png|jpg|svg|gif)$/,
-        type: "asset/resource",
       },
       {
         test: /\.tsx?$/,

@@ -1,7 +1,9 @@
 {
   "name": "react-redux-bootstrap-task",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "The package shows how to use Redux-Thunk along with TypeScript language.",
   "private": true,
+  "keywords": ["js", "typescript", "webpack"],
   "dependencies": {
     "@types/is": "0.0.21",
     "@types/node": "^16.11.19",
