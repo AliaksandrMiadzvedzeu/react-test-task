@@ -84,12 +84,20 @@ class RegisterForm extends Form<DispatchProps, IFormControls> {
         this.state.formControls.name.value,
         this.state.formControls.surname.value
       )
-      .catch((error) => {
+      .catch(({ response }) => {
+        let serverErrorMessage = "";
+        switch (response?.data?.error?.message) {
+          case "EMAIL_EXISTS":
+            serverErrorMessage = "Email already exists. Try with another one.";
+            break;
+          default:
+            serverErrorMessage = "Something went wrong. Try again.";
+        }
         this.setState({
           ...this.state,
-          serverErrorMessage: "Something went wrong. Please try again!",
+          serverErrorMessage,
         });
-        console.error("An unexpected error happened:", error);
+        console.error("An unexpected error happened:", response?.data);
       });
 
   render() {

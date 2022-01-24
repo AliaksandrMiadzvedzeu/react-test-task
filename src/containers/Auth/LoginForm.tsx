@@ -59,12 +59,25 @@ class LoginForm extends Form<DispatchProps, IFormControls> {
         this.state.formControls.email.value,
         this.state.formControls.password.value
       )
-      .catch((error) => {
+      .catch(({ response }) => {
+        let serverErrorMessage = "";
+        switch (response?.data?.error?.message) {
+          case "EMAIL_NOT_FOUND":
+            serverErrorMessage =
+              "The email you entered is incorrect. Try again.";
+            break;
+          case "INVALID_PASSWORD":
+            serverErrorMessage =
+              "The password you entered is incorrect. Try again.";
+            break;
+          default:
+            serverErrorMessage = "Something went wrong. Try again.";
+        }
         this.setState({
           ...this.state,
-          serverErrorMessage: "Something went wrong. Please try again!",
+          serverErrorMessage,
         });
-        console.error("An unexpected error happened:", error);
+        console.error("An unexpected error happened:", response?.data);
       });
 
   render() {
