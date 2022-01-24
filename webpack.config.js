@@ -68,7 +68,7 @@ const plugins = () => {
 
   if (isProd) {
     base.push(
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
       new BundleAnalyzerPlugin({
         analyzerMode: process.env.STATS || "disabled",
       })
