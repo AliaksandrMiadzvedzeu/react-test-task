@@ -62,9 +62,7 @@ const plugins = () => {
         },
       ],
     }),
-    new MiniCssExtractPlugin({
-      filename: filename("css"),
-    }),
+    new MiniCssExtractPlugin(),
     new ESLintWebpackPlugin(),
   ];
 
@@ -101,8 +99,15 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: MiniCssExtractPlugin.loader },
-          { loader: "css-loader" },
+          isProd ? MiniCssExtractPlugin.loader : "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 1,
+              sourceMap: true,
+            },
+          },
         ],
       },
       {
