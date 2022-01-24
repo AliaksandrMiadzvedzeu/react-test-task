@@ -29,7 +29,7 @@ const optimization = () => {
 };
 
 const filename = (ext) =>
-  isDev ? `[name].${ext}` : `[name].[fullhash].${ext}`;
+  isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
 
 const babelOptions = () => {
   return {
@@ -63,12 +63,12 @@ const plugins = () => {
         },
       ],
     }),
-    new MiniCssExtractPlugin(),
     new ESLintWebpackPlugin(),
   ];
 
   if (isProd) {
     base.push(
+      new MiniCssExtractPlugin(),
       new BundleAnalyzerPlugin({
         analyzerMode: process.env.STATS || "disabled",
       })
