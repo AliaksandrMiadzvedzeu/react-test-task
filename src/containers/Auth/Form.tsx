@@ -73,7 +73,6 @@ export class Form<T, P extends IFormControls> extends Component<T, P> {
       const control: IFormControl = formControls[controlName];
 
       const attributes: InputProps = {
-        key: controlName + index,
         type: control.type,
         value: control.value,
         label: control.label,
@@ -88,7 +87,7 @@ export class Form<T, P extends IFormControls> extends Component<T, P> {
         attributes.errorMessage = control.errorMessage;
       }
 
-      return <Input {...attributes} />;
+      return <Input key={controlName + index} {...attributes} />;
     });
   }
 }

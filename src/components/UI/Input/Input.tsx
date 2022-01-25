@@ -6,7 +6,6 @@ function isInvalid({ valid, touched, shouldValidate }: Partial<InputProps>) {
 }
 
 export interface InputProps {
-  key: string;
   type: string;
   value: string;
   label: string;

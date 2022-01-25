@@ -4,9 +4,9 @@ import classes from "./Notes.module.css";
 import { INote } from "../../store/notes/reducers";
 import { ApplicationState } from "../../store";
 import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
 import { changeNote, removeNote } from "../../store/notes/actions";
 import { connect } from "react-redux";
+import { NoteAction } from "../../store/notes/actionTypes";
 
 interface OwnProps {
   getFilteredNotes: (filter: string) => Array<INote>;
@@ -31,7 +31,7 @@ function mapStateToProps(state: ApplicationState): StateProps {
 }
 
 function mapDispatchToProps(
-  dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
+  dispatch: ThunkDispatch<ApplicationState, unknown, NoteAction>
 ): DispatchProps {
   return {
     changeNote: (id: string) => dispatch(changeNote(id)),
@@ -41,7 +41,7 @@ function mapDispatchToProps(
 
 class NoteTable extends Component<Props> {
   renderNotes() {
-    return this.props.getFilteredNotes(this.props.filter).map((note, index) => {
+    return this.props.getFilteredNotes(this.props.filter).map((note) => {
       return (
         <tr key={"note-" + note.id}>
           <td>

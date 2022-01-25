@@ -26,11 +26,11 @@ import { encodeEmail } from "../../lib/encodeEmail";
 export function fetchNotes(): ThunkAction<
   Promise<void>,
   ApplicationState,
-  {},
+  unknown,
   NoteAction
 > {
   return async (
-    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
+    dispatch: ThunkDispatch<ApplicationState, unknown, NoteAction>,
     getState
   ): Promise<void> => {
     const { email } = getState().auth;
@@ -41,7 +41,7 @@ export function fetchNotes(): ThunkAction<
       );
 
       const notes: Array<INote> = [];
-      let counter: number = 0;
+      let counter = 0;
       if (response.data != null) {
         for (const value of Object.values(response.data)) {
           notes.push({
@@ -64,11 +64,11 @@ export function fetchNotes(): ThunkAction<
 export function saveNotes(): ThunkAction<
   Promise<void>,
   ApplicationState,
-  {},
+  unknown,
   NoteAction
 > {
   return async (
-    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
+    dispatch: ThunkDispatch<ApplicationState, unknown, NoteAction>,
     getState
   ): Promise<void> => {
     const { email } = getState().auth;
@@ -94,9 +94,9 @@ export function saveNotes(): ThunkAction<
 
 export function changeNote(
   id: string
-): ThunkAction<void, ApplicationState, {}, NoteAction> {
+): ThunkAction<void, ApplicationState, unknown, NoteAction> {
   return (
-    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
+    dispatch: ThunkDispatch<ApplicationState, unknown, NoteAction>,
     getState
   ): void => {
     const { updatedNotes } = getState().note;
@@ -119,8 +119,10 @@ export function changeNote(
 
 export function addNote(
   note: INote
-): ThunkAction<void, ApplicationState, {}, NoteAction> {
-  return (dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>): void => {
+): ThunkAction<void, ApplicationState, unknown, NoteAction> {
+  return (
+    dispatch: ThunkDispatch<ApplicationState, unknown, NoteAction>
+  ): void => {
     dispatch({
       type: ADD_NOTE,
       note,
@@ -137,9 +139,9 @@ export function setFilter(filter: string): SetFilterAction {
 
 export function removeNote(
   id: string
-): ThunkAction<void, ApplicationState, {}, NoteAction> {
+): ThunkAction<void, ApplicationState, unknown, NoteAction> {
   return (
-    dispatch: ThunkDispatch<ApplicationState, {}, NoteAction>,
+    dispatch: ThunkDispatch<ApplicationState, unknown, NoteAction>,
     getState
   ): void => {
     const { updatedNotes } = getState().note;

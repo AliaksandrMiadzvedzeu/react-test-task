@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
 import classes from "./Notes.module.css";
 import {
   addNote,
@@ -15,6 +14,7 @@ import { INote } from "../../store/notes/reducers";
 import { isEqual } from "../../lib/isEqual";
 import { FilterTypes } from "./FilterTypes";
 import NoteTable from "./NoteTable";
+import { NoteAction } from "../../store/notes/actionTypes";
 
 interface State {
   newNoteText: string;
@@ -48,7 +48,7 @@ function mapStateToProps(state: ApplicationState): StateProps {
 }
 
 function mapDispatchToProps(
-  dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
+  dispatch: ThunkDispatch<ApplicationState, unknown, NoteAction>
 ): DispatchProps {
   return {
     fetchNotes: () => dispatch(fetchNotes()),
@@ -59,7 +59,7 @@ function mapDispatchToProps(
 }
 
 class Notes extends Component<Props, State> {
-  noteCounter: number = 0; //This counter uses to make unique id when we are creating new note.
+  noteCounter = 0; //This counter uses to make unique id when we are creating new note.
 
   constructor(props: Props) {
     super(props);

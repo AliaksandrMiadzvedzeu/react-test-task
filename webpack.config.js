@@ -47,9 +47,7 @@ const plugins = () => {
     new Dotenv(),
     new HTMLWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html"),
-      minify: {
-        collapseWhitespace: isProd,
-      },
+      minify: isProd,
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
@@ -63,12 +61,12 @@ const plugins = () => {
         },
       ],
     }),
-    new ESLintWebpackPlugin(),
+    new ESLintWebpackPlugin({ extensions: ["ts", "tsx"] }),
   ];
 
   if (isProd) {
     base.push(
-      new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
+      new MiniCssExtractPlugin({ filename: filename("css") }),
       new BundleAnalyzerPlugin({
         analyzerMode: process.env.STATS || "disabled",
       })

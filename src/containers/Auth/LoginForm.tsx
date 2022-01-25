@@ -7,14 +7,14 @@ import { IFormControls } from "./IFormControl";
 import { Form } from "./Form";
 import { ThunkDispatch } from "redux-thunk";
 import { ApplicationState } from "../../store";
-import { AnyAction } from "redux";
+import { AuthAction } from "../../store/auth/actionTypes";
 
 interface DispatchProps {
   auth: (email: string, password: string) => Promise<void>;
 }
 
 function mapDispatchToProps(
-  dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
+  dispatch: ThunkDispatch<ApplicationState, unknown, AuthAction>
 ): DispatchProps {
   return {
     auth: (email: string, password: string) => dispatch(auth(email, password)),

@@ -2,12 +2,12 @@ import axios from "../../axios/axios";
 import {
   AUTH_LOGOUT,
   AUTH_SUCCESS,
+  AuthAction,
   AuthLogoutAction,
   AuthSuccessAction,
 } from "./actionTypes";
 import { ThunkAction } from "redux-thunk";
 import { ApplicationState } from "../index";
-import { AnyAction } from "redux";
 import { encodeEmail } from "../../lib/encodeEmail";
 
 export function auth(
@@ -15,7 +15,7 @@ export function auth(
   password: string,
   name?: string,
   surname?: string
-): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
+): ThunkAction<Promise<void>, ApplicationState, unknown, AuthAction> {
   return async (dispatch) => {
     const isRegistration = name != null;
     const api_key = process.env.API_KEY;
@@ -71,7 +71,7 @@ export function auth(
 
 export function autoLogout(
   time: number
-): ThunkAction<Promise<void>, ApplicationState, {}, AnyAction> {
+): ThunkAction<Promise<void>, ApplicationState, unknown, AuthAction> {
   return async (dispatch) => {
     setTimeout(() => {
       dispatch(logout());
@@ -94,8 +94,8 @@ export function logout(): AuthLogoutAction {
 export function autoLogin(): ThunkAction<
   Promise<void>,
   ApplicationState,
-  {},
-  AnyAction
+  unknown,
+  AuthAction
 > {
   return async (dispatch) => {
     const token = localStorage.getItem("token");

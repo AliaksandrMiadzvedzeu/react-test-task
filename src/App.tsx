@@ -29,14 +29,14 @@ function mapStateToProps(state: ApplicationState): StateProps {
 }
 
 function mapDispatchToProps(
-  dispatch: ThunkDispatch<ApplicationState, {}, AnyAction>
+  dispatch: ThunkDispatch<ApplicationState, unknown, AnyAction>
 ): DispatchProps {
   return {
     autoLogin: () => dispatch(autoLogin()),
   };
 }
 
-class App extends Component<DispatchProps & StateProps, {}> {
+class App extends Component<DispatchProps & StateProps> {
   componentDidMount() {
     return this.props.autoLogin();
   }

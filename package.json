@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "The package shows how to use Redux-Thunk along with TypeScript language.",
   "private": true,
-  "keywords": ["js", "typescript", "webpack"],
+  "keywords": [
+    "js",
+    "typescript",
+    "webpack"
+  ],
   "dependencies": {
     "@types/is": "0.0.21",
     "@types/node": "^16.11.19",
@@ -25,12 +29,6 @@
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "stats": "cross-env STATS=server npm run build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -50,6 +48,8 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.1",
@@ -58,6 +58,7 @@
     "css-minimizer-webpack-plugin": "^3.4.1",
     "dotenv-webpack": "^7.0.3",
     "eslint": "^8.7.0",
+    "eslint-plugin-react": "^7.28.0",
     "eslint-webpack-plugin": "^3.1.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.2",
