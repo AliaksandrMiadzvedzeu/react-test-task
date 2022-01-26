@@ -1,0 +1,21 @@
+.active {
+  background-color: rgb(51, 102, 153);
+  color: white;
+}
+
+.active:hover {
+  color: yellow;
+}
+
+.inactive {
+  color: white;
+}
+
+.inactive:hover {
+  color: yellow;
+}
+
+.menuPanel {
+  background-color: rgb(0, 153, 204);
+  color: white;
+}

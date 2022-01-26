@@ -1,7 +1,7 @@
 import React, { Component, ReactChild, ReactChildren } from "react";
 import { connect } from "react-redux";
 import { ApplicationState } from "../../store";
-import Menu from "../../components/Navigation/Menu/Menu";
+import Menu from "../../components/Menu/Menu";
 
 interface StateProps {
   isAuthenticated: boolean;

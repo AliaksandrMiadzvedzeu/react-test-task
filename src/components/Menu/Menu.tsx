@@ -42,15 +42,21 @@ class Menu extends Component<OwnProps> {
     }
 
     return (
-      <div className={"d-flex justify-content-between " + classes.menuPanel}>
-        <div className="d-flex align-items-center px-3">
-          {this.props.isAuthenticated && this.props.userName.length > 0
-            ? `Hello ${this.props.userName}`
-            : null}
+      <div className={"container-fluid " + classes.menuPanel}>
+        <div className="row align-items-center">
+          {this.props.isAuthenticated && this.props.userName.length > 0 ? (
+            <div className="col-12 col-sm-auto py-1 py-sm-0 text-center">
+              {`Hello ${this.props.userName}`}
+            </div>
+          ) : null}
+
+          <div className="col d-none d-sm-block">&nbsp;</div>
+          <div className="col-12 col-sm-auto px-0">
+            <ul className={"nav nav-pills justify-content-center"}>
+              {this.renderLinks(links)}
+            </ul>
+          </div>
         </div>
-        <ul className={"nav nav-pills justify-content-end"}>
-          {this.renderLinks(links)}
-        </ul>
       </div>
     );
   }
