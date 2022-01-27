@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./index";
+import "./scss/styles";
 import App from "./App";
 import { createStore, compose, applyMiddleware } from "redux";
 import { reducers } from "./store";

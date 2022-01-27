@@ -98,7 +98,7 @@ class Notes extends Component<Props, State> {
     const completedNotesCount = this.getFilteredNotes("completed").length;
 
     return (
-      <div className="d-flex justify-content-center flex-grow-1 pt-5">
+      <div className="d-flex justify-content-center flex-grow-1 pt-4 pt-sm-5">
         <div className="w-100 px-sm-5">
           <h2 className="text-center mb-3">Notes</h2>
 

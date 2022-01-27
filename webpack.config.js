@@ -87,7 +87,7 @@ module.exports = {
     publicPath: "/",
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx", ".json"],
+    extensions: [".js", ".ts", ".tsx", ".json", ".scss", ".css"]
   },
   optimization: optimization(),
   devServer: {
@@ -100,16 +100,33 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(sc|c)ss$/,
         use: [
           isProd ? MiniCssExtractPlugin.loader : "style-loader",
           {
             loader: "css-loader",
             options: {
-              modules: true,
-              importLoaders: 1,
               sourceMap: true,
             },
+          },
+          {
+            loader: "postcss-loader", // Run postcss actions
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      stage: 3,
+                      browsers: "last 2 versions",
+                    },
+                  ],
+                ],
+              },
+            },
+          },
+          {
+            loader: "sass-loader", // compiles Sass to CSS
           },
         ],
       },

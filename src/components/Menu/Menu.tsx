@@ -45,7 +45,10 @@ class Menu extends Component<OwnProps> {
       <div className={"container-fluid " + classes.menuPanel}>
         <div className="row align-items-center">
           {this.props.isAuthenticated && this.props.userName.length > 0 ? (
-            <div className="col-12 col-sm-auto py-1 py-sm-0 text-center">
+            <div
+              className="col-12 col-sm-auto py-1 py-sm-0 text-center"
+              style={{ wordBreak: "break-word" }}
+            >
               {`Hello ${this.props.userName}`}
             </div>
           ) : null}

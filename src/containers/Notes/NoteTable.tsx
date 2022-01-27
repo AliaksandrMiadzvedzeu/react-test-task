@@ -57,7 +57,10 @@ class NoteTable extends Component<Props> {
                 checked={!note.done}
                 onChange={() => this.props.changeNote(note.id)}
               />
-              <label className="form-check-label" htmlFor="flexCheckChecked">
+              <label
+                className="form-check-label"
+                htmlFor={"flexCheckChecked" + note.id}
+              >
                 {note.done ? FilterTypes.COMPLETED : FilterTypes.WAITING}
               </label>
             </div>
