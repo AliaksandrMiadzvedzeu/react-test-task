@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { FilterTypes } from "./FilterTypes";
-import classes from "./Notes.module.css";
 import { INote } from "../../store/notes/reducers";
 import { ApplicationState } from "../../store";
 import { ThunkDispatch } from "redux-thunk";
@@ -68,7 +67,7 @@ class NoteTable extends Component<Props> {
           <td>
             <button
               type="button"
-              className={"btn " + classes.btnPrimary}
+              className="btn btn-outline-primary"
               onClick={() => this.props.removeNote(note.id)}
             >
               Remove

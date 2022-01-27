@@ -176,7 +176,7 @@ class Notes extends Component<Props, State> {
             />
             <div className="input-group-append">
               <button
-                className={"btn " + classes.btnWarning}
+                className="btn btn-primary"
                 type="button"
                 id="button-addon2"
                 onClick={this.onAddNoteHandler}
@@ -191,7 +191,7 @@ class Notes extends Component<Props, State> {
             <button
               type="button"
               onClick={this.props.saveNotes.bind(this)}
-              className={"btn " + classes.btnWarning + " " + classes.saveButton}
+              className={"btn btn-primary " + classes.saveButton}
               disabled={isEqual(this.props.notes, this.props.updatedNotes)}
             >
               Save notes
