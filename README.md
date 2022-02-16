@@ -1,7 +1,6 @@
 # React-Redux-Thunk Example
 
-The package shows how to use [Redux-Thunk](https://github.com/reduxjs/redux-thunk) along with [TypeScript](https://www.typescriptlang.org/) language.
-I also use [Bootstrap](https://getbootstrap.com/) and [Webpack](https://webpack.js.org/) in this example.
+This project is a to-do list with authorization. Technologies: [Redux-Thunk](https://github.com/reduxjs/redux-thunk/), [TypeScript](https://www.typescriptlang.org/), [Webpack](https://webpack.js.org/), [Bootstrap](https://getbootstrap.com/) and [React Testing Library](https://testing-library.com/).
 
 To run the package.
 
