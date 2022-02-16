@@ -1,4 +1,4 @@
-import axios from "../../axios/axios";
+import axios from "axios";
 import {
   AUTH_LOGOUT,
   AUTH_SUCCESS,
@@ -36,12 +36,17 @@ export function auth(
         expiresIn = response.data?.expiresIn;
 
         if (isRegistration) {
-          return axios.put(`/users/${encodeEmail(email)}.json`, {
-            name: name,
-            surname: surname,
-          });
+          return axios.put(
+            `${process.env.AXIOS_BASE_URL}/users/${encodeEmail(email)}.json`,
+            {
+              name: name,
+              surname: surname,
+            }
+          );
         } else {
-          return axios.get(`/users/${encodeEmail(email)}.json`);
+          return axios.get(
+            `${process.env.AXIOS_BASE_URL}/users/${encodeEmail(email)}.json`
+          );
         }
       })
       .then((response) => {

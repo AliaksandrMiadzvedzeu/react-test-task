@@ -28,7 +28,8 @@
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "stats": "cross-env STATS=server npm run build",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
     "prepare": "husky install"
   },
   "devDependencies": {
