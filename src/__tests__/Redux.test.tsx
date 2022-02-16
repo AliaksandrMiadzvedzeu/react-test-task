@@ -1,30 +1,11 @@
 import React from "react";
-import { applyMiddleware, compose, createStore, Reducer } from "redux";
-import { Provider } from "react-redux";
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Layout from "../hoc/Layout/Layout";
-import { ApplicationState } from "../store/index";
-import { reducers } from "../store/index";
 import Notes from "../containers/Notes/Notes";
 import { MemoryRouter } from "react-router-dom";
-import thunk from "redux-thunk";
 import axios, { AxiosResponse } from "axios";
-
-function renderWithRedux(
-  jsx: JSX.Element,
-  options: { initialState?: ApplicationState } = {}
-) {
-  const store = createStore(
-    reducers,
-    options.initialState,
-    compose(applyMiddleware(thunk))
-  );
-  return {
-    ...render(<Provider store={store}>{jsx}</Provider>),
-    store,
-  };
-}
+import { renderWithRedux } from "../lib/renderWithRedux";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -107,6 +88,17 @@ describe("Redux testing", () => {
     expect(screen.getByText(/Item0/i)).toBeInTheDocument();
     expect(screen.queryByText(/Item1/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Item2/i)).toBeInTheDocument();
+  });
+  it("click radio Waiting", async () => {
+    const labelRadio: HTMLInputElement = screen.getByRole("radio", {
+      name: /Waiting/i,
+    });
+    userEvent.click(labelRadio, { button: 0 });
+    expect(labelRadio).toBeChecked();
+
+    expect(screen.queryByText(/Item0/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Item1/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Item2/i)).not.toBeInTheDocument();
   });
   it("add new note", async () => {
     userEvent.type(screen.getByPlaceholderText(/Text of note/i), "New Item");
