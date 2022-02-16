@@ -38,7 +38,7 @@ const hits = [
 ];
 
 describe("Redux testing", () => {
-  it("checks initial state and click radio Completed", async () => {
+  beforeEach(async () => {
     //Prepare the response we want to get from axios
     const mockedResponse: AxiosResponse = {
       data: hits,
@@ -75,7 +75,9 @@ describe("Redux testing", () => {
         }
       );
     });
+  });
 
+  it("checks initial state and click radio Completed", async () => {
     expect(screen.getByText(/Hello Alex/i)).toBeInTheDocument();
     expect(screen.getByText(/All \(3\)/i)).toBeInTheDocument();
     expect(screen.getByText(/Completed \(2\)/i)).toBeInTheDocument();
@@ -106,5 +108,16 @@ describe("Redux testing", () => {
     expect(screen.getByText(/Item0/i)).toBeInTheDocument();
     expect(screen.queryByText(/Item1/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Item2/i)).toBeInTheDocument();
+  });
+  it("add new note", async () => {
+    userEvent.type(screen.getByPlaceholderText(/Text of note/i), "New Item");
+
+    const button: HTMLButtonElement = screen.getByRole("button", {
+      name: /Add note/i,
+    });
+    const leftClick = { button: 0 };
+    userEvent.click(button, leftClick);
+
+    expect(screen.getByText(/New Item/i)).toBeInTheDocument();
   });
 });
