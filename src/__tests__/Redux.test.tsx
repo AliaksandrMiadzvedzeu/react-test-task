@@ -4,10 +4,8 @@ import { Provider } from "react-redux";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Layout from "../hoc/Layout/Layout";
-
 import { ApplicationState } from "../store/index";
 import { reducers } from "../store/index";
-
 import Notes from "../containers/Notes/Notes";
 import { MemoryRouter } from "react-router-dom";
 import thunk from "redux-thunk";
@@ -77,7 +75,7 @@ describe("Redux testing", () => {
     });
   });
 
-  it("checks initial state and click radio Completed", async () => {
+  it("checks initial state", async () => {
     expect(screen.getByText(/Hello Alex/i)).toBeInTheDocument();
     expect(screen.getByText(/All \(3\)/i)).toBeInTheDocument();
     expect(screen.getByText(/Completed \(2\)/i)).toBeInTheDocument();
@@ -96,7 +94,8 @@ describe("Redux testing", () => {
     ).toBeInTheDocument();
 
     expect(screen.getAllByText(/Remove/i)).toHaveLength(3);
-
+  });
+  it("click radio Completed", async () => {
     const labelRadio: HTMLInputElement = screen.getByRole("radio", {
       name: /Completed/i,
     });
