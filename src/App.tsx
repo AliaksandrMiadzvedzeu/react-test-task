@@ -18,13 +18,11 @@ interface DispatchProps {
 
 interface StateProps {
   isAuthenticated: boolean;
-  email: string;
 }
 
 function mapStateToProps(state: ApplicationState): StateProps {
   return {
     isAuthenticated: !!state.auth.token,
-    email: state.auth.email,
   };
 }
 
