@@ -38,7 +38,7 @@ export class Form<T, P extends IFormControls> extends Component<T, P> {
       ...this.state.formControls,
     };
 
-    const control: IFormControl = { ...formControls[controlName] };
+    const control: IFormControl = formControls[controlName];
 
     control.value = event.target.value;
 
