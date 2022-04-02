@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { screen, waitFor } from "@testing-library/react";
-import { MemoryRouter, Navigate, Route, Routes } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import App from "../App";
 import axios from "axios";
 import { renderWithRedux } from "../lib/renderWithRedux";
