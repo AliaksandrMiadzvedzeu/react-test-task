@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react";
 import Menu from "../components/Menu/Menu";
 import { MemoryRouter } from "react-router-dom";
 
-describe("Render components", () => {
-  it("renders Menu component", () => {
+describe("Menu component", () => {
+  it("registration and list page", () => {
     const { rerender } = render(
       <MemoryRouter>
         <Menu isAuthenticated={false} userName="" />

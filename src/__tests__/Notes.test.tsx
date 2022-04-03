@@ -1,22 +1,20 @@
 import React from "react";
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Layout from "../hoc/Layout/Layout";
-import Notes from "../containers/Notes/Notes";
-import { MemoryRouter } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
-import { renderWithRedux } from "../lib/renderWithRedux";
+import renderConnected from "../lib/renderConnected";
+import Notes from "../containers/Notes/Notes";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const hits = [
-  { id: "id0", text: "Item0", done: true },
-  { id: "id1", text: "Item1", done: false },
-  { id: "id2", text: "Item2", done: true },
+  { text: "Item0", done: true },
+  { text: "Item1", done: false },
+  { text: "Item2", done: true },
 ];
 
-describe("Redux testing", () => {
+describe("Notes component", () => {
   beforeEach(async () => {
     //Prepare the response we want to get from axios
     const mockedResponse: AxiosResponse = {
@@ -29,35 +27,9 @@ describe("Redux testing", () => {
     // Make the mock return the custom axios response
     mockedAxios.get.mockResolvedValueOnce(mockedResponse);
 
-    await waitFor(() => {
-      return renderWithRedux(
-        <MemoryRouter>
-          <Layout>
-            <Notes />
-          </Layout>
-        </MemoryRouter>,
-        {
-          initialState: {
-            auth: {
-              token: "fakeToken",
-              email: "email@tut.by",
-              userName: "Alex",
-            },
-            note: {
-              notes: [],
-              updatedNotes: [],
-              loading: false,
-              errorMessage: "",
-              filter: "all",
-            },
-          },
-        }
-      );
-    });
+    await renderConnected(<Notes />);
   });
-
-  it("checks initial state", async () => {
-    expect(screen.getByText(/Hello Alex/i)).toBeInTheDocument();
+  it("checks initial state", () => {
     expect(screen.getByText(/All \(3\)/i)).toBeInTheDocument();
     expect(screen.getByText(/Completed \(2\)/i)).toBeInTheDocument();
     expect(screen.getByText(/Waiting \(1\)/i)).toBeInTheDocument();
@@ -76,12 +48,13 @@ describe("Redux testing", () => {
 
     expect(screen.getAllByText(/Remove/i)).toHaveLength(3);
   });
-  it("click radio Completed", async () => {
+  it("click radio Completed", () => {
     const labelRadio: HTMLInputElement = screen.getByRole("radio", {
       name: /Completed/i,
     });
     expect(labelRadio).not.toBeChecked();
     const leftClick = { button: 0 };
+
     userEvent.click(labelRadio, leftClick);
     expect(labelRadio).toBeChecked();
 
@@ -89,10 +62,11 @@ describe("Redux testing", () => {
     expect(screen.queryByText(/Item1/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Item2/i)).toBeInTheDocument();
   });
-  it("click radio Waiting", async () => {
+  it("click radio Waiting", () => {
     const labelRadio: HTMLInputElement = screen.getByRole("radio", {
       name: /Waiting/i,
     });
+
     userEvent.click(labelRadio, { button: 0 });
     expect(labelRadio).toBeChecked();
 
@@ -100,7 +74,7 @@ describe("Redux testing", () => {
     expect(screen.getByText(/Item1/i)).toBeInTheDocument();
     expect(screen.queryByText(/Item2/i)).not.toBeInTheDocument();
   });
-  it("add new note", async () => {
+  it("add new note", () => {
     userEvent.type(screen.getByPlaceholderText(/Text of note/i), "New Item");
 
     const button: HTMLButtonElement = screen.getByRole("button", {
